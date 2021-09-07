@@ -29,6 +29,9 @@ bool cApp::OnInit() {
     frame->SetSizer(sizer);
 
     frame->Show();
+
+    mf = new cMain();
+    mf->Show();
     return true;
 
 	/*mf = new cMain();

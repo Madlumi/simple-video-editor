@@ -1,7 +1,7 @@
 #pragma once
 
 #include "wx/wx.h"
-//#include "cMain.h"
+#include "cMain.h"
 #include "wxImagePanel.h"
 class cApp : public wxApp {
 
@@ -12,7 +12,7 @@ public:
 public:
 	bool OnInit();
 private:
-	//cMain* mf = nullptr;
+	cMain* mf = nullptr;
 	wxString path;
 	wxFrame* frame;
 	wxImagePanel* drawPane;
