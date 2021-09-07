@@ -9,7 +9,7 @@ class wxImagePanel : public wxPanel {
     double asp;
 
 public:
-    wxImagePanel(wxFrame* parent, wxString file, wxBitmapType format);
+    wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format);
 
     void paintEvent(wxPaintEvent& evt);
     void paintNow();

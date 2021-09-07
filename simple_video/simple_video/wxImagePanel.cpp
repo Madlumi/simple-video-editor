@@ -34,7 +34,7 @@ BEGIN_EVENT_TABLE(wxImagePanel, wxPanel)
      void wxImagePanel::keyReleased(wxKeyEvent& event) {}
      */
 
-    wxImagePanel::wxImagePanel(wxFrame* parent, wxString file, wxBitmapType format) :
+    wxImagePanel::wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format) :
     wxPanel(parent) {
     // load the file... ideally add a check to see if loading was successful
     image.LoadFile(file, format);
