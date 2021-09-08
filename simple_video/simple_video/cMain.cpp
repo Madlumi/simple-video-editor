@@ -10,6 +10,7 @@ wxEND_EVENT_TABLE()
 
 cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(600,400)) {
 	//top bar-------------------------------------
+	this->SetMinSize(wxSize(500,400));
 	menuBar = new wxMenuBar();
 	this->SetMenuBar(menuBar);
 
@@ -30,17 +31,42 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(600,400)) 
 
 	// make sure to call this first
 	wxInitAllImageHandlers();
+	wxSplitterWindow* splitterV = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
+	wxSplitterWindow* splitter = new wxSplitterWindow(splitterV, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
+	
+	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
+	topPanel = new wxPanel(splitter, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
+	topPanel->SetBackgroundColour(wxColor(100,0,100));
+
+	botPanel = new wxPanel(splitterV, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
+	botPanel->SetBackgroundColour(wxColor(25, 0, 100));
 
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-	frame = new wxPanel(this, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
 
+	frame = new wxPanel(splitter, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
 	// then simply create like this
-
 	path = wxGetCwd() + wxT("/pot.png");
 	drawPane = new wxImagePanel(frame, path, wxBITMAP_TYPE_PNG);
+
 	sizer->Add(drawPane, 1, wxEXPAND);
 	frame->SetSizer(sizer);
+	//sizer2->Add(frame, 1, wxEXPAND | wxALL, 5);
+	//sizer2->Add(topPanel, 1, wxEXPAND | wxALL, 5);
+	//this->SetSizer(sizer2);
+	splitter->SetMinimumPaneSize(200);
+	splitter->SetSashGravity(1);
+	splitterV->SetSashGravity(1);
+	splitter->SplitVertically(frame, topPanel);
+	splitterV->SetMinimumPaneSize(100);
+	splitterV->SplitHorizontally(splitter, botPanel);
 
+	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
+	//panel2 = new wxPanel(this, wxID_ANY, wxPoint(550, 50), wxSize(300, 300));
+	// then simply create like this
+	//path = wxGetCwd() + wxT("/pot.png");
+	//drawPane2 = new wxImagePanel(panel2, path, wxBITMAP_TYPE_PNG);
+	//sizer2->Add(drawPane2, 1, wxEXPAND);
+	//panel2->SetSizer(sizer2);
 	//frame->Show();
 
 	//btn = new wxButton(this, 10000, ":)",wxPoint(30, 15), wxSize(75, 50));

@@ -2,7 +2,7 @@
 #include "wx/wx.h"
 #include "imgFrame.h"
 #include "wxImagePanel.h"
-
+#include <wx/splitter.h>
 class cMain :public wxFrame {
 
 public:
@@ -24,11 +24,13 @@ public:
 
     void MenuExport(wxCommandEvent& evt);
     void MenuExit(wxCommandEvent& evt);
-
+    wxPanel* topPanel;
+    wxPanel* botPanel;
     wxString path;
     wxPanel* frame;
     wxImagePanel* drawPane;
-
+    wxPanel* panel2;
+    wxImagePanel* drawPane2;
 
     wxDECLARE_EVENT_TABLE();
 };
