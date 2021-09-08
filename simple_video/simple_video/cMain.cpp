@@ -92,19 +92,23 @@ void cMain::MenuOpen(wxCommandEvent& evt) {
 void cMain::MenuSave(wxCommandEvent& evt) {
 }
 
+//TODO error handling
 void cMain::MenuImport(wxCommandEvent& evt) {
-	wxDirDialog dirDial(this, "chose frame folder","c:/"/*def path*/, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, "chose frame folder");
+	wxDirDialog dirDial(this, "chose frame folder", "c:/"/*def path*/, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, "chose frame folder");
 	dirDial.ShowModal();
 	//dirDial.GetPath();
-	std::string sss = (dirDial.GetPath().ToStdString());
-	char const* ppchar = sss.c_str();  //use char const* as target type
-	OutputDebugStringA(ppchar);
-		
 
 
-	//std::string path = "/path/to/directory";
-	//for (const auto& entry : fs::directory_iterator(path))
-	//	std::cout << entry.path() << std::endl;
+
+
+	std::string path = dirDial.GetPath().ToStdString();
+	for (const auto& entry : std::filesystem::directory_iterator(path)) {
+
+		std::string sss{ entry.path().u8string() + "\n"};
+		char const* ppchar = sss.c_str();  //use char const* as target type
+		OutputDebugStringA(ppchar);
+	}
+		//std::cout << entry.path() << std::endl;
 }
 
 void cMain::MenuExport(wxCommandEvent& evt) {
