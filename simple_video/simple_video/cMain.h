@@ -3,6 +3,9 @@
 #include "imgFrame.h"
 #include "wxImagePanel.h"
 #include <wx/splitter.h>
+#include <filesystem>
+#include "wx/filedlg.h"
+
 class cMain :public wxFrame {
 
 public:

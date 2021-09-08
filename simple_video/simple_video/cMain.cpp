@@ -1,11 +1,13 @@
 #include "cMain.h"
 #include "EList.h"
 
+
 wxBEGIN_EVENT_TABLE(cMain,wxFrame)
 	EVT_BUTTON(10000, OnbtnClck)
 	EVT_MENU(EList::MenuNew, MenuNew)
 	EVT_MENU(EList::MenuOpen, MenuOpen)
 	EVT_MENU(EList::MenuExit, MenuExit)
+	EVT_MENU(EList::MenuImport, MenuImport)
 wxEND_EVENT_TABLE()
 
 cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(600,400)) {
@@ -91,6 +93,18 @@ void cMain::MenuSave(wxCommandEvent& evt) {
 }
 
 void cMain::MenuImport(wxCommandEvent& evt) {
+	wxDirDialog dirDial(this, "chose frame folder","c:/"/*def path*/, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, "chose frame folder");
+	dirDial.ShowModal();
+	//dirDial.GetPath();
+	std::string sss = (dirDial.GetPath().ToStdString());
+	char const* ppchar = sss.c_str();  //use char const* as target type
+	OutputDebugStringA(ppchar);
+		
+
+
+	//std::string path = "/path/to/directory";
+	//for (const auto& entry : fs::directory_iterator(path))
+	//	std::cout << entry.path() << std::endl;
 }
 
 void cMain::MenuExport(wxCommandEvent& evt) {

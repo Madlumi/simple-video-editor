@@ -86,10 +86,11 @@ void wxImagePanel::render(wxDC& dc) {
 
         wxSize s = image.GetSize();
         asp = (1.0 * s.GetWidth()) / (1.0 * s.GetHeight());
-        std::string ss = std::to_string(asp);
+        
+        /*std::string ss = std::to_string(asp);
         char const* pchar = ss.c_str();  //use char const* as target type
         OutputDebugStringA(pchar);
-
+        */
         //asp = s.GetWidth() / s.GetHeight();
         neww = newh * asp;
         
