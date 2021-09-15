@@ -76,6 +76,11 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	//btn = new wxButton(this, 10000, ":)",wxPoint(30, 15), wxSize(75, 50));
 	//txt = new wxTextCtrl(this, wxID_ANY, "", wxPoint(15, 90), wxSize(150, 50));
 	//lst = new wxListBox(this, wxID_ANY, wxPoint(250, 15), wxSize(500, 200));
+	entry* e[100];
+	for (int i = 0; i < 100; i++) {
+		e[i] = entry_create(":)", botPanel, i);
+	}
+	
 }
 
 cMain::~cMain() {}

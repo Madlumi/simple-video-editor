@@ -58,10 +58,7 @@ void timelineAddEnd(TIMELINE head, struct entry* p) {
 	f->next = nav->next;
 	nav->next = f;
 }
-struct entry* mkEntry(std::string s) {
-	struct entry* e = (struct entry*) malloc(sizeof(struct entry));
-	return e;
-}
+
 int tlLength(struct frame* head) {
 	int i = 0;
 	while (head->next != NULL) {
@@ -72,18 +69,7 @@ int tlLength(struct frame* head) {
 }
 
 //struct entry* getFrame(TIMELINE head, int loc);
-struct entry* getFrame(struct frame* head, int loc) {
-	if (loc > tlLength(head) || loc < 1) {
-		return NULL;
-	}
 
-	for (int i = 0; i < loc;) {
-		
-		head = head->next;
-		i += head->entry->hold;
-	}
-	return head->entry;
-}
 void deleteTimeline(struct frame* f) {
 	if (f->next != NULL)deleteTimeline(f->next);
 	free(f->entry);
@@ -101,6 +87,6 @@ void assetMng::addFolder(std::string p) {
 
 	for (const auto& entry : std::filesystem::directory_iterator(p)) {
 		std::string sss{ entry.path().u8string() + "\n" };
-		timelineAddEnd(tl, mkEntry(sss));
+		//timelineAddEnd(tl, mkEntry(sss));
 	}
 }

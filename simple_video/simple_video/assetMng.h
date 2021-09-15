@@ -14,18 +14,10 @@ struct frame {
 	struct entry* entry;
 	struct frame* next;
 };
-
-struct entry {
-	//std::string file;
-	int hold;
-};
-
 TIMELINE mkTimeline();
 
 void timelinAdd(TIMELINE head, struct entry* e, int loc);
 
-struct entry* getFrame(TIMELINE head, int loc);
-struct entry* mkEntry(std::string s);
 void deleteTimeline(TIMELINE head);
 
 

@@ -10,7 +10,7 @@ struct entry {
     wxButton* btn;
 };
 
-struct entry* entry_create(const char* str, wxWindow* parent);
+struct entry* entry_create(const char* str, wxWindow* parent,int i);
 
 
 class Entry {
