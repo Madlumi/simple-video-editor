@@ -52,8 +52,9 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	path = wxGetCwd() + wxT("/pot.png");
 	drawPane = new wxImagePanel(frame, path, wxBITMAP_TYPE_PNG);
 
-	sizer->Add(drawPane, 1, wxEXPAND);
+	//sizer->Add(drawPane, 1, wxEXPAND);
 	frame->SetSizer(sizer);
+	frame->GetSizer()->Add(drawPane, 1, wxEXPAND);
 	//sizer2->Add(frame, 1, wxEXPAND | wxALL, 5);
 	//sizer2->Add(topPanel, 1, wxEXPAND | wxALL, 5);
 	//this->SetSizer(sizer2);
@@ -104,13 +105,9 @@ void cMain::MenuImport(wxCommandEvent& evt) {
 
 
 
-	//assets->addFolder(dirDial.GetPath().ToStdString());
+	assets->addFolder(dirDial.GetPath().ToStdString(),botPanel, frame);
 
-
-	entry* e[100];
-	for (int i = 0; i < 100; i++) {
-		e[i] = entry_create(":)", botPanel, i);
-	}
+	
 
 		//std::cout << entry.path() << std::endl;
 }

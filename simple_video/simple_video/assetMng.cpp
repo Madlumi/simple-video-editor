@@ -82,8 +82,13 @@ void deleteFrame(struct frame* f) {
 	free(f);
 }
 
-void assetMng::addFolder(std::string p) {
+void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	TIMELINE tl = mkTimeline();
+
+	entry* e[10];
+	for (int i = 0; i < 10; i++) {
+		e[i] = entry_create(":)", tlpar,impar, i);
+	}
 
 	for (const auto& entry : std::filesystem::directory_iterator(p)) {
 		std::string sss{ entry.path().u8string() + "\n" };
