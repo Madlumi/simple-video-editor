@@ -76,10 +76,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	//btn = new wxButton(this, 10000, ":)",wxPoint(30, 15), wxSize(75, 50));
 	//txt = new wxTextCtrl(this, wxID_ANY, "", wxPoint(15, 90), wxSize(150, 50));
 	//lst = new wxListBox(this, wxID_ANY, wxPoint(250, 15), wxSize(500, 200));
-	entry* e[100];
-	for (int i = 0; i < 100; i++) {
-		e[i] = entry_create(":)", botPanel, i);
-	}
+
 	
 }
 
@@ -99,7 +96,7 @@ void cMain::MenuOpen(wxCommandEvent& evt) {
 void cMain::MenuSave(wxCommandEvent& evt) {
 }
 
-//TODO error handling
+//TODO error handling it was litteraly in´the docs, why not include it?
 void cMain::MenuImport(wxCommandEvent& evt) {
 	wxDirDialog dirDial(this, "chose frame folder", "E:/ANIM"/*def path*/, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, "chose frame folder");
 	dirDial.ShowModal();
@@ -107,8 +104,14 @@ void cMain::MenuImport(wxCommandEvent& evt) {
 
 
 
-	assets->addFolder(dirDial.GetPath().ToStdString());
-	
+	//assets->addFolder(dirDial.GetPath().ToStdString());
+
+
+	entry* e[100];
+	for (int i = 0; i < 100; i++) {
+		e[i] = entry_create(":)", botPanel, i);
+	}
+
 		//std::cout << entry.path() << std::endl;
 }
 
