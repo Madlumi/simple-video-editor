@@ -5,7 +5,10 @@ struct entry* entry_create(const char* str, wxWindow* tl, wxPanel* imgframe, int
 	e->hold = 1;
 	e->btn = new wxButton(tl, wxID_ANY,str, wxPoint(30*i, 15));
 
-	wxString path = wxGetCwd() + wxT("/pot.png");
+	//wxString path = wxGetCwd() + wxT("/pot.png");
+	wxString path = wxString::FromUTF8(str);
+	OutputDebugString(L"" + (path)+"\n");
+	
 	e->img = new wxImagePanel(imgframe, path, wxBITMAP_TYPE_PNG);
 	imgframe->GetSizer()->Add(e->img, 1, wxEXPAND);
 		//btn = new wxButton(this, 10000, ":)",wxPoint(30, 15), wxSize(75, 50));
