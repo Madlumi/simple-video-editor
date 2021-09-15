@@ -1,6 +1,6 @@
 #include "cMain.h"
 #include "EList.h"
-
+#include "Entry.h"
 
 wxBEGIN_EVENT_TABLE(cMain,wxFrame)
 	EVT_BUTTON(10000, OnbtnClck)
@@ -10,7 +10,9 @@ wxBEGIN_EVENT_TABLE(cMain,wxFrame)
 	EVT_MENU(EList::MenuImport, MenuImport)
 wxEND_EVENT_TABLE()
 
-cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(600,400)) {
+cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)) {
+
+	assets = new assetMng();
 	//top bar-------------------------------------
 	this->SetMinSize(wxSize(500,400));
 	menuBar = new wxMenuBar();
@@ -94,20 +96,14 @@ void cMain::MenuSave(wxCommandEvent& evt) {
 
 //TODO error handling
 void cMain::MenuImport(wxCommandEvent& evt) {
-	wxDirDialog dirDial(this, "chose frame folder", "c:/"/*def path*/, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, "chose frame folder");
+	wxDirDialog dirDial(this, "chose frame folder", "E:/ANIM"/*def path*/, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, "chose frame folder");
 	dirDial.ShowModal();
 	//dirDial.GetPath();
 
 
 
-
-	std::string path = dirDial.GetPath().ToStdString();
-	for (const auto& entry : std::filesystem::directory_iterator(path)) {
-
-		std::string sss{ entry.path().u8string() + "\n"};
-		char const* ppchar = sss.c_str();  //use char const* as target type
-		OutputDebugStringA(ppchar);
-	}
+	assets->addFolder(dirDial.GetPath().ToStdString());
+	
 		//std::cout << entry.path() << std::endl;
 }
 

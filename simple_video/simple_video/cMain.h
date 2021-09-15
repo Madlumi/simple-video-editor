@@ -7,6 +7,10 @@
 #include "wx/filedlg.h"
 #include <string>
 #include <iostream>
+
+#include "assetMng.h"
+
+
 class cMain :public wxFrame {
 
 public:
@@ -28,6 +32,8 @@ public:
 
     void MenuExport(wxCommandEvent& evt);
     void MenuExit(wxCommandEvent& evt);
+
+    assetMng* assets;
     wxPanel* topPanel;
     wxPanel* botPanel;
     wxString path;
