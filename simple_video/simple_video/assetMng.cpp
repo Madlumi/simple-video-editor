@@ -83,7 +83,7 @@ void deleteFrame(struct frame* f) {
 }
 
 void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
-	TIMELINE tl = mkTimeline();
+	if(tl==NULL)tl = mkTimeline();
 	int iii = 0;
 	//entry* e[10];
 	//for (int i = 0; i < 10; i++) {
@@ -95,6 +95,7 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 		OutputDebugString(L""+(sss)+"\n");
 		timelineAddEnd(tl, entry_create(sss.c_str(), tlpar, impar, iii));
 
+		//TODO remove 
 		iii++;
 		if (iii >= 10) {
 			break;
