@@ -57,11 +57,15 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	botPanel = new wxPanel(splitterV, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
 	botPanel->SetBackgroundColour(wxColor(25, 0, 100));
 
+	tlScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(2000, 50), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
+	tlScroller->SetBackgroundColour(wxColor(5, 2, 5));
+	tlScroller->SetVirtualSize(wxSize(4000, 300));
 	playPanel = new wxPanel(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
-	tlPanel = new wxPanel(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
+	tlPanel = new wxPanel(tlScroller, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
 	playPanel->SetBackgroundColour(wxColor(25, 25, 25));
 	tlPanel->SetBackgroundColour(wxColor(25, 200, 50));
 
+	
 
 	frame = new wxPanel(splitter, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
 	
@@ -81,11 +85,16 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	//sizer balongas-----------------------------------------
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* botSizer = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* tlScrSizer = new wxBoxSizer(wxVERTICAL);
+
 
 	wxBoxSizer* playSizer = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* tlSizer = new wxBoxSizer(wxHORIZONTAL);
 
+	
+
 	playPanel->SetSizer(playSizer);
+	tlScroller->SetSizer(tlScrSizer);
 	tlPanel->SetSizer(tlSizer);
 	botPanel->SetSizer(botSizer);
 	//sizer->Add(drawPane, 1, wxEXPAND);
@@ -108,12 +117,15 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 
 
 	botPanel->GetSizer()->Add(playPanel, 0, wxEXPAND);
-	botPanel->GetSizer()->Add(tlPanel, 0, wxEXPAND);
+	botPanel->GetSizer()->Add(tlScroller, 1, wxEXPAND);
+
+	tlScroller->GetSizer()->Add(tlPanel, 0, wxEXPAND);
 	
+
 	playPanel->GetSizer()->Add(prevf, 0, wxEXPAND);
 	playPanel->GetSizer()->Add(play, 0, wxEXPAND);
 	playPanel->GetSizer()->Add(nextf, 0, wxEXPAND);
-
+	
 	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	//panel2 = new wxPanel(this, wxID_ANY, wxPoint(550, 50), wxSize(300, 300));
 	// then simply create like this

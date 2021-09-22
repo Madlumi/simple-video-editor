@@ -8,6 +8,7 @@
 #include <string>
 #include <iostream>
 #include <wx/timer.h>
+#include <wx/scrolwin.h>
 
 #include "assetMng.h"
 
@@ -27,7 +28,7 @@ public:
     wxButton* prevf = nullptr;
     wxButton* play = nullptr;
     wxTimer* tim = nullptr;
-
+    
 
     void OnbtnClck(wxCommandEvent &evt);
     
@@ -50,6 +51,10 @@ public:
     wxPanel* botPanel;
     wxPanel* playPanel;
     wxPanel* tlPanel;
+
+    wxScrolledWindow* tlScroller;
+    //new wxScrolled(NULL, wxID_ANY, wxPoint(500, 50), wxSize(50, 50),wxHSCROLL | wxVSCROLL, wxT("scrolledWindow"));
+
     wxString path;
     wxPanel* frame;
     wxImagePanel* drawPane;
