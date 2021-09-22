@@ -16,5 +16,7 @@ struct entry* entry_create(const char* str, wxWindow* tl, wxPanel* imgframe,int 
 
 
 class Entry {
+public:
+    void clicked();
 };
 

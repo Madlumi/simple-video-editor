@@ -97,9 +97,37 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 
 		//TODO remove 
 		iii++;
-		if (iii >= 10) {
+		if (iii >= 24) {
 			break;
 		}
 		//timelineAddEnd(tl, mkEntry(sss));
 	}
+}
+
+void assetMng::nextFrame() {
+	frame* head = tl->next;
+	if (head == NULL) {
+		OutputDebugString(L"nextFrame: no head\n");
+		return;
+	}
+	int frameN = 0;
+	while (head->next != NULL) {
+		if (head->entry->img->IsShown()) {
+			head->next->entry->img->Show(true);
+			head->entry->img->Show(false);
+			head->next->entry->img->Layout();
+			
+			return;
+		}
+		frameN++;
+		head = head->next;
+	}
+	tl->next->entry->img->Show(true);
+	head->entry->img->Show(false);
+	tl->next->entry->img->Layout();
+	
+}
+
+void assetMng::prevFrame() {
+	
 }

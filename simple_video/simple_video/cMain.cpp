@@ -8,10 +8,16 @@ wxBEGIN_EVENT_TABLE(cMain,wxFrame)
 	EVT_MENU(EList::MenuOpen, MenuOpen)
 	EVT_MENU(EList::MenuExit, MenuExit)
 	EVT_MENU(EList::MenuImport, MenuImport)
+	EVT_BUTTON(EList::Nextf, BtnNextF)
+	EVT_BUTTON(EList::prevf, BtnPrevF)
+	EVT_BUTTON(EList::play , BtnPlay)
+
+
+	EVT_TIMER(EList::Timer, TimNextF)
 wxEND_EVENT_TABLE()
 
 cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)) {
-
+	
 	assets = new assetMng();
 	//top bar-------------------------------------
 	this->SetMinSize(wxSize(500,400));
@@ -45,25 +51,50 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	botPanel = new wxPanel(splitterV, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
 	botPanel->SetBackgroundColour(wxColor(25, 0, 100));
 
-	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-
+	
 	frame = new wxPanel(splitter, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
-	// then simply create like this
-	path = wxGetCwd() + wxT("/pot.png");
-	drawPane = new wxImagePanel(frame, path, wxBITMAP_TYPE_PNG);
+	
+	//varius definers--------------------------------
+	tim = new wxTimer(this, EList::Timer);
+	nextf = new wxButton(botPanel, EList::Nextf, ">");
+	play = new wxButton(botPanel, EList::play, ">>");
+	prevf = new wxButton(botPanel, EList::prevf, "<");
+	//nextf->Bind(wxEVT_BUTTON, &cMain::BtnNextF, this);
+	//nextf->Bind(wxEVT_BUTTON, &Entry::clicked, this, -1, e->img);
+	
+	
+	//temp drawpane thingie
+	//path = wxGetCwd() + wxT("/pot.png");
+	//drawPane = new wxImagePanel(frame, path, wxBITMAP_TYPE_PNG);
 
+	//sizer balongas-----------------------------------------
+	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* botSizer = new wxBoxSizer(wxHORIZONTAL);
+	botPanel->SetSizer(botSizer);
 	//sizer->Add(drawPane, 1, wxEXPAND);
 	frame->SetSizer(sizer);
-	frame->GetSizer()->Add(drawPane, 1, wxEXPAND);
+	
 	//sizer2->Add(frame, 1, wxEXPAND | wxALL, 5);
 	//sizer2->Add(topPanel, 1, wxEXPAND | wxALL, 5);
 	//this->SetSizer(sizer2);
+
+	//splitter balongas-----------------------------------------
 	splitter->SetMinimumPaneSize(200);
 	splitter->SetSashGravity(1);
 	splitterV->SetSashGravity(1);
 	splitter->SplitVertically(frame, topPanel);
 	splitterV->SetMinimumPaneSize(100);
 	splitterV->SplitHorizontally(splitter, botPanel);
+
+
+	//sizer addition balongas-----------------------------------------
+	//frame->GetSizer()->Add(drawPane, 1, wxEXPAND);
+
+	botPanel->GetSizer()->Add(prevf, 0, wxEXPAND);
+	botPanel->GetSizer()->Add(play, 0, wxEXPAND);
+	botPanel->GetSizer()->Add(nextf, 0, wxEXPAND);
+
+
 
 	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	//panel2 = new wxPanel(this, wxID_ANY, wxPoint(550, 50), wxSize(300, 300));
@@ -86,6 +117,22 @@ void cMain::OnbtnClck(wxCommandEvent& evt) {
 	//lst->AppendString(txt->GetValue());
 	//OutputDebugStringA("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 	evt.Skip();
+}
+
+void cMain::BtnNextF(wxCommandEvent& evt) {
+	assets->nextFrame();
+}
+
+void cMain::BtnPrevF(wxCommandEvent& evt) {
+	assets->prevFrame();
+}
+
+void cMain::BtnPlay(wxCommandEvent& evt) {
+	tim->Start(16.666*2);
+
+}
+void cMain::TimNextF(wxTimerEvent& evt) {
+	assets->nextFrame();
 }
 
 void cMain::MenuNew(wxCommandEvent& evt) {

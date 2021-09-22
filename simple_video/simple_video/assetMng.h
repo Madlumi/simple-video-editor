@@ -18,6 +18,7 @@ TIMELINE mkTimeline();
 
 void timelinAdd(TIMELINE head, struct entry* e, int loc);
 
+
 void deleteTimeline(TIMELINE head);
 
 
@@ -25,6 +26,7 @@ class assetMng {
 public:
 	assetMng();
 	~assetMng();
+
 //list of imported files in arrays(1)
 //array(2) of struct with image and pointer to file in array(1) 
 //array(1) can be normal array[]
@@ -33,5 +35,7 @@ public:
 public:
 	TIMELINE tl= NULL;
 	void addFolder(std::string p, wxWindow* tlpar, wxPanel* impar);
+	void nextFrame();
+	void prevFrame();
 };
 

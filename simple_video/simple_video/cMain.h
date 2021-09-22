@@ -7,6 +7,7 @@
 #include "wx/filedlg.h"
 #include <string>
 #include <iostream>
+#include <wx/timer.h>
 
 #include "assetMng.h"
 
@@ -22,14 +23,25 @@ public:
     //wxTextCtrl* txt = nullptr;
     //wxListBox* lst = nullptr;
     wxMenuBar* menuBar = nullptr;
+    wxButton* nextf = nullptr;
+    wxButton* prevf = nullptr;
+    wxButton* play = nullptr;
+    wxTimer* tim = nullptr;
+
 
     void OnbtnClck(wxCommandEvent &evt);
+    
+    void BtnNextF(wxCommandEvent& evt);
+    void BtnPrevF(wxCommandEvent& evt);
+    void BtnPlay(wxCommandEvent& evt);
+
+    void TimNextF(wxTimerEvent& evt);
+
     void MenuNew(wxCommandEvent& evt);
     void MenuOpen(wxCommandEvent& evt);
     void MenuSave(wxCommandEvent& evt);
 
     void MenuImport(wxCommandEvent& evt);
-
     void MenuExport(wxCommandEvent& evt);
     void MenuExit(wxCommandEvent& evt);
 
