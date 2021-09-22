@@ -15,7 +15,7 @@ public:
     void paintNow();
     void OnSize(wxSizeEvent& event);
     void render(wxDC& dc);
-
+    void exportFrame(std::string p, int i);
     // some useful events
     /*
      void mouseMoved(wxMouseEvent& event);

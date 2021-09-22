@@ -74,10 +74,12 @@ void wxImagePanel::paintNow() {
  * method so that it can work no matter what type of DC
  * (e.g. wxPaintDC or wxClientDC) is used.
  */
-void wxImagePanel::render(wxDC& dc) {
-    
-   
 
+
+
+
+
+void wxImagePanel::render(wxDC& dc) {
     int neww, newh;
     dc.GetSize(&neww, &newh);
 
@@ -112,4 +114,10 @@ void wxImagePanel::OnSize(wxSizeEvent& event) {
     Refresh();
     //skip the event.
     event.Skip();
+}
+
+void wxImagePanel::exportFrame(std::string p, int i) {
+    std::string pp = p +"/file_"+ std::to_string(i)+".png";
+    
+    image.SaveFile(pp);
 }

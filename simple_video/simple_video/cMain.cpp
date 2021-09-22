@@ -8,6 +8,7 @@ wxBEGIN_EVENT_TABLE(cMain,wxFrame)
 	EVT_MENU(EList::MenuOpen, MenuOpen)
 	EVT_MENU(EList::MenuExit, MenuExit)
 	EVT_MENU(EList::MenuImport, MenuImport)
+	EVT_MENU(EList::MenuExport, MenuExport)
 	EVT_BUTTON(EList::Nextf, BtnNextF)
 	EVT_BUTTON(EList::prevf, BtnPrevF)
 	EVT_BUTTON(EList::play , BtnPlay)
@@ -128,7 +129,7 @@ void cMain::BtnPrevF(wxCommandEvent& evt) {
 }
 
 void cMain::BtnPlay(wxCommandEvent& evt) {
-	tim->Start(16.666*2);
+	tim->Start(83.3333);
 
 }
 void cMain::TimNextF(wxTimerEvent& evt) {
@@ -160,6 +161,18 @@ void cMain::MenuImport(wxCommandEvent& evt) {
 }
 
 void cMain::MenuExport(wxCommandEvent& evt) {
+	OutputDebugStringA("EXPORTINGGGGGGGGGGGGGGGGGGGGGGG");
+
+	wxDirDialog dirDial(this, "chose output folder", "E:/ANIM"/*def path*/, 
+						wxDD_DEFAULT_STYLE, 
+						wxDefaultPosition, wxDefaultSize,
+						"chose output folder"
+	);
+	dirDial.ShowModal();
+	//dirDial.GetPath();
+	assets->exportFolder(dirDial.GetPath().ToStdString());
+
+
 }
 
 void cMain::MenuExit(wxCommandEvent& evt) {

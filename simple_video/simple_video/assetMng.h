@@ -35,6 +35,7 @@ public:
 public:
 	TIMELINE tl= NULL;
 	void addFolder(std::string p, wxWindow* tlpar, wxPanel* impar);
+	bool exportFolder(std::string p);
 	void nextFrame();
 	void prevFrame();
 };

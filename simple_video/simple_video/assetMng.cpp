@@ -104,6 +104,23 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	}
 }
 
+bool assetMng::exportFolder(std::string p) {
+	frame* head = tl->next;
+	if (head == NULL) {
+		OutputDebugString(L"nextFrame: no head\n");
+		return false;
+	}
+	int frameN = 0;
+	while (head->next != NULL) {
+		//head->next->entry->img->Show(true);
+		//head->entry->img->Show(false);
+		//head->next->entry->img->Layout();
+		head->entry->img->exportFrame(p,frameN);
+		frameN++;
+		head = head->next;
+	}
+}
+
 void assetMng::nextFrame() {
 	frame* head = tl->next;
 	if (head == NULL) {
@@ -127,7 +144,6 @@ void assetMng::nextFrame() {
 	tl->next->entry->img->Layout();
 	
 }
-
 void assetMng::prevFrame() {
 	
 }
