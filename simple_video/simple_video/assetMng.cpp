@@ -122,6 +122,7 @@ bool assetMng::exportFolder(std::string p) {
 }
 
 void assetMng::nextFrame() {
+	if (tl == NULL) { return; };
 	frame* head = tl->next;
 	if (head == NULL) {
 		OutputDebugString(L"nextFrame: no head\n");

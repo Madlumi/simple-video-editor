@@ -48,6 +48,8 @@ public:
     assetMng* assets;
     wxPanel* topPanel;
     wxPanel* botPanel;
+    wxPanel* playPanel;
+    wxPanel* tlPanel;
     wxString path;
     wxPanel* frame;
     wxImagePanel* drawPane;

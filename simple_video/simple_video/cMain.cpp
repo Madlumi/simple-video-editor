@@ -42,6 +42,8 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 
 	// make sure to call this first
 	wxInitAllImageHandlers();
+	//wxSplitterWindow* splitterBot = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
+
 	wxSplitterWindow* splitterV = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
 	wxSplitterWindow* splitter = new wxSplitterWindow(splitterV, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
 	
@@ -49,17 +51,25 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	topPanel = new wxPanel(splitter, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
 	topPanel->SetBackgroundColour(wxColor(100,0,100));
 
+	
+
+
 	botPanel = new wxPanel(splitterV, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
 	botPanel->SetBackgroundColour(wxColor(25, 0, 100));
 
-	
+	playPanel = new wxPanel(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
+	tlPanel = new wxPanel(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
+	playPanel->SetBackgroundColour(wxColor(25, 25, 25));
+	tlPanel->SetBackgroundColour(wxColor(25, 200, 50));
+
+
 	frame = new wxPanel(splitter, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
 	
 	//varius definers--------------------------------
 	tim = new wxTimer(this, EList::Timer);
-	nextf = new wxButton(botPanel, EList::Nextf, ">");
-	play = new wxButton(botPanel, EList::play, ">>");
-	prevf = new wxButton(botPanel, EList::prevf, "<");
+	nextf = new wxButton(playPanel, EList::Nextf, ">");
+	play = new wxButton(playPanel, EList::play, ">>");
+	prevf = new wxButton(playPanel, EList::prevf, "<");
 	//nextf->Bind(wxEVT_BUTTON, &cMain::BtnNextF, this);
 	//nextf->Bind(wxEVT_BUTTON, &Entry::clicked, this, -1, e->img);
 	
@@ -70,7 +80,13 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 
 	//sizer balongas-----------------------------------------
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-	wxBoxSizer* botSizer = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* botSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* playSizer = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* tlSizer = new wxBoxSizer(wxHORIZONTAL);
+
+	playPanel->SetSizer(playSizer);
+	tlPanel->SetSizer(tlSizer);
 	botPanel->SetSizer(botSizer);
 	//sizer->Add(drawPane, 1, wxEXPAND);
 	frame->SetSizer(sizer);
@@ -87,15 +103,16 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	splitterV->SetMinimumPaneSize(100);
 	splitterV->SplitHorizontally(splitter, botPanel);
 
-
 	//sizer addition balongas-----------------------------------------
 	//frame->GetSizer()->Add(drawPane, 1, wxEXPAND);
 
-	botPanel->GetSizer()->Add(prevf, 0, wxEXPAND);
-	botPanel->GetSizer()->Add(play, 0, wxEXPAND);
-	botPanel->GetSizer()->Add(nextf, 0, wxEXPAND);
 
-
+	botPanel->GetSizer()->Add(playPanel, 0, wxEXPAND);
+	botPanel->GetSizer()->Add(tlPanel, 0, wxEXPAND);
+	
+	playPanel->GetSizer()->Add(prevf, 0, wxEXPAND);
+	playPanel->GetSizer()->Add(play, 0, wxEXPAND);
+	playPanel->GetSizer()->Add(nextf, 0, wxEXPAND);
 
 	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	//panel2 = new wxPanel(this, wxID_ANY, wxPoint(550, 50), wxSize(300, 300));
@@ -152,9 +169,9 @@ void cMain::MenuImport(wxCommandEvent& evt) {
 	//dirDial.GetPath();
 
 
-
-	assets->addFolder(dirDial.GetPath().ToStdString(),botPanel, frame);
-
+	
+	assets->addFolder(dirDial.GetPath().ToStdString(),tlPanel, frame);
+	this->Layout();
 	
 
 		//std::cout << entry.path() << std::endl;

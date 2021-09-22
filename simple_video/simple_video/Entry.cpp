@@ -3,8 +3,8 @@
 struct entry* entry_create(const char* str, wxWindow* tl, wxPanel* imgframe, int i) {
 	struct entry* e = (struct entry*) malloc(sizeof(struct entry));
 	e->hold = 1;
-	e->btn = new wxButton(tl, wxID_ANY,"-", wxPoint(30*i, 15));
-
+	e->btn = new wxButton(tl, wxID_ANY,"-",wxPoint(5*i, 15));
+	tl->GetSizer()->Add(e->btn, 1, wxEXPAND);
 	//wxString path = wxGetCwd() + wxT("/pot.png");
 	wxString path = wxString::FromUTF8(str);
 	OutputDebugString(L"" + (path)+"\n");
