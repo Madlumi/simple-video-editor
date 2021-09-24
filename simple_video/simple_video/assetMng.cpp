@@ -1,6 +1,7 @@
 #include "assetMng.h"
 #include "Entry.h"
 #include < windows.h >
+#include <wx/progdlg.h>
 assetMng::assetMng() {
 }
 
@@ -90,11 +91,19 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	//	e[i] = entry_create(":)", tlpar,impar, i);
 	//}
 
+	wxProgressDialog *progress = new 
+	wxProgressDialog("Loading...",
+		"Importing files",
+		24,
+		NULL, 
+		wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_REMAINING_TIME
+		);
+
 	for (const auto& entry : std::filesystem::directory_iterator(p)) {
 		std::string sss{ entry.path().u8string() };
 		OutputDebugString(L""+(sss)+"\n");
 		timelineAddEnd(tl, entry_create(sss.c_str(), tlpar, impar, iii));
-
+		progress->Update(iii);
 		//TODO remove 
 		iii++;
 		if (iii >= 24) {
@@ -102,14 +111,27 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 		}
 		//timelineAddEnd(tl, mkEntry(sss));
 	}
+	progress->Destroy();
 }
 
 bool assetMng::exportFolder(std::string p) {
 	frame* head = tl->next;
+
+	//TODO un-hard code 24
+
+
+
 	if (head == NULL) {
 		OutputDebugString(L"nextFrame: no head\n");
 		return false;
 	}
+	wxProgressDialog* progress = new
+		wxProgressDialog("Rendering...",
+			"Exporting files",
+			24,
+			NULL,
+			wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_REMAINING_TIME
+		);
 	int frameN = 0;
 	while (head->next != NULL) {
 		//head->next->entry->img->Show(true);
@@ -117,8 +139,10 @@ bool assetMng::exportFolder(std::string p) {
 		//head->next->entry->img->Layout();
 		head->entry->img->exportFrame(p,frameN);
 		frameN++;
+		progress->Update(frameN);
 		head = head->next;
 	}
+	progress->Destroy();
 }
 
 void assetMng::nextFrame() {

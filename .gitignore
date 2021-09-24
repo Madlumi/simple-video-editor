@@ -34,3 +34,15 @@ simple_video/simple_video/simple_video.vcxproj.filters
 simple_video/simple_video/simple_video.vcxproj.user
 simple_video/.vs/simple_video/v16/ipch/AutoPCH/addde729e2732a1/ENUMLIST.ipch
 simple_video/simple_video/Debug/EnumList.obj
+*.obj
+simple_video/simple_video/Debug/simple_video.tlog/unsuccessfulbuild
+simple_video/simple_video/Debug/EList.obj
+simple_video/simple_video/Debug/assetmng.obj
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/c8be4b447a76ea67/ASSETMNG.ipch
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/a23c623ae168391f/ELIST.ipch
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/6e060c7a9ad2a19c/ENTRY.ipch
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/63fb3fa619034d55/IMGFRAME.ipch
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/63bc7befcfd22bf6/IMGFRAME.ipch
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/5ed6b8453abf0b0f/ENTRY.ipch
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/28ad54b88ac368e4/ASSETMNG.ipch
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/a23c623ae168391f/ELIST.ipch

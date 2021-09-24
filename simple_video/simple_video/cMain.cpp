@@ -65,7 +65,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	playPanel->SetBackgroundColour(wxColor(25, 25, 25));
 	tlPanel->SetBackgroundColour(wxColor(25, 200, 50));
 
-	
+	tlScroller->SetScrollRate(7, 7);
 
 	frame = new wxPanel(splitter, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
 	
