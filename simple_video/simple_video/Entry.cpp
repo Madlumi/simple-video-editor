@@ -3,8 +3,8 @@
 struct entry* entry_create(const char* str, wxWindow* tl, wxPanel* imgframe, int i) {
 	struct entry* e = (struct entry*) malloc(sizeof(struct entry));
 	e->hold = 1;
-	e->btn = new wxButton(tl, wxID_ANY,"-",wxPoint(5*i, 15));
-	tl->GetSizer()->Add(e->btn, 1, wxEXPAND);
+	e->btn = new wxButton(tl, wxID_ANY,"-",wxPoint(7*i, 15), wxSize(7, 15));
+	//tl->GetSizer()->Add(e->btn, 1, wxEXPAND);
 	//wxString path = wxGetCwd() + wxT("/pot.png");
 	wxString path = wxString::FromUTF8(str);
 	OutputDebugString(L"" + (path)+"\n");
@@ -18,6 +18,27 @@ struct entry* entry_create(const char* str, wxWindow* tl, wxPanel* imgframe, int
 	//e->btn->Bind(wxEVT_BUTTON, &Entry::clicked, &tl->GetParent, -1, e->img);
 	return e;
 }
+
+/*
+void hide(entry* e) {
+	e->img->Show(false);
+	e->btn->Enable(true);
+}
+void show(entry* e) {
+	e->img->Show(true);
+	e->btn->Enable(false);
+}*/
+
 void Entry::clicked(){
 	OutputDebugString(L"dasasasasasasasasasasasasasasasasasasasas\n");
+}
+
+void entry::hide() {
+	img->Show(false);
+	btn->Enable(true);
+}
+
+void entry::show() {
+	img->Show(true);
+	btn->Enable(false);
 }

@@ -82,7 +82,7 @@ void deleteFrame(struct frame* f) {
 	free(f->entry);
 	free(f);
 }
-
+int mLoad = 96;
 void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	if(tl==NULL)tl = mkTimeline();
 	int iii = 0;
@@ -94,7 +94,7 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	wxProgressDialog *progress = new 
 	wxProgressDialog("Loading...",
 		"Importing files",
-		24,
+		mLoad,
 		NULL, 
 		wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_REMAINING_TIME
 		);
@@ -106,7 +106,7 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 		progress->Update(iii);
 		//TODO remove 
 		iii++;
-		if (iii >= 24) {
+		if (iii >= mLoad) {
 			break;
 		}
 		//timelineAddEnd(tl, mkEntry(sss));
@@ -117,8 +117,6 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 bool assetMng::exportFolder(std::string p) {
 	frame* head = tl->next;
 
-	//TODO un-hard code 24
-
 
 
 	if (head == NULL) {
@@ -128,7 +126,7 @@ bool assetMng::exportFolder(std::string p) {
 	wxProgressDialog* progress = new
 		wxProgressDialog("Rendering...",
 			"Exporting files",
-			24,
+			mLoad,
 			NULL,
 			wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_REMAINING_TIME
 		);
@@ -155,19 +153,15 @@ void assetMng::nextFrame() {
 	int frameN = 0;
 	while (head->next != NULL) {
 		if (head->entry->img->IsShown()) {
-			head->next->entry->img->Show(true);
-			head->entry->img->Show(false);
-			head->next->entry->img->Layout();
-			
+			head->next->entry->show();
+			head->entry->hide();
 			return;
 		}
 		frameN++;
 		head = head->next;
 	}
-	tl->next->entry->img->Show(true);
-	head->entry->img->Show(false);
-	tl->next->entry->img->Layout();
-	
+	tl->next->entry->show();
+	head->entry->hide();
 }
 void assetMng::prevFrame() {
 	
