@@ -18,7 +18,6 @@ wxBEGIN_EVENT_TABLE(cMain,wxFrame)
 wxEND_EVENT_TABLE()
 
 cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)) {
-	
 	assets = new assetMng();
 	//top bar-------------------------------------
 	this->SetMinSize(wxSize(500,400));
@@ -49,7 +48,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	
 	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	topPanel = new wxPanel(splitter, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
-	topPanel->SetBackgroundColour(wxColor(100,0,100));
+	topPanel->SetBackgroundColour(wxColor(100,100,100));
 
 	
 
@@ -105,13 +104,15 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	//this->SetSizer(sizer2);
 
 	//splitter balongas-----------------------------------------
-	splitter->SetMinimumPaneSize(200);
+	splitter->SetMinimumPaneSize(100);
 	splitter->SetSashGravity(1);
 	splitterV->SetSashGravity(1);
 	splitter->SplitVertically(frame, topPanel);
 	splitterV->SetMinimumPaneSize(100);
 	splitterV->SplitHorizontally(splitter, botPanel);
-
+	
+	//splitter->SetSashPosition(128*3);
+	//splitterV->SetSashPosition( 100);
 	//sizer addition balongas-----------------------------------------
 	//frame->GetSizer()->Add(drawPane, 1, wxEXPAND);
 
@@ -125,7 +126,9 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	playPanel->GetSizer()->Add(prevf, 0, wxEXPAND);
 	playPanel->GetSizer()->Add(play, 0, wxEXPAND);
 	playPanel->GetSizer()->Add(nextf, 0, wxEXPAND);
-	
+
+
+	splitter->SetSashPosition(128 * 3);
 	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	//panel2 = new wxPanel(this, wxID_ANY, wxPoint(550, 50), wxSize(300, 300));
 	// then simply create like this
@@ -158,7 +161,11 @@ void cMain::BtnPrevF(wxCommandEvent& evt) {
 }
 
 void cMain::BtnPlay(wxCommandEvent& evt) {
-	tim->Start(83.3333);
+	if (!tim->IsRunning()) {
+		tim->Start(83.3333  * .75);
+	}else{
+		tim->Stop();
+	}
 
 }
 void cMain::TimNextF(wxTimerEvent& evt) {

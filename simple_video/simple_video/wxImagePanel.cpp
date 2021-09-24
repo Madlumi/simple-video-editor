@@ -83,7 +83,7 @@ void wxImagePanel::render(wxDC& dc) {
     int neww, newh;
     dc.GetSize(&neww, &newh);
 
-    if (neww != w || newh != h) {
+    if ((neww != w || newh != h ) ) {
 
 
         wxSize s = image.GetSize();

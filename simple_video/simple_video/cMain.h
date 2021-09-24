@@ -12,7 +12,6 @@
 
 #include "assetMng.h"
 
-
 class cMain :public wxFrame {
 
 public:
