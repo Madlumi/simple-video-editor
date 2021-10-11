@@ -13,6 +13,12 @@ class EList {
 			play = 10009,
 			Timer = 10010,
 		};
+		enum cam {
+			derived = 0,
+			hard = 1,
+			linear = 2,
+			smooth = 3,
+		};
 		
 
 };

@@ -35,7 +35,6 @@ public:
 	//linked list?
 public:
 	TIMELINE tl= NULL;
-	TIMELINE ctl = NULL;
 	void addFolder(std::string p, wxWindow* tlpar, wxPanel* impar);
 	bool exportFolder(std::string p);
 	void nextFrame();

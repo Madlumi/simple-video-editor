@@ -2,6 +2,7 @@
 #include "Entry.h"
 #include < windows.h >
 #include <wx/progdlg.h>
+#include "EList.h"
 assetMng::assetMng() {
 }
 
@@ -88,7 +89,7 @@ void deleteFrame(struct frame* f) {
 int mLoad = 96;
 void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	if(tl==NULL)tl = mkTimeline();
-	if(ctl == NULL)ctl = mkTimeline();
+	
 	int iii = 0;
 	//entry* e[10];
 	//for (int i = 0; i < 10; i++) {
@@ -106,7 +107,7 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	for (const auto& entry : std::filesystem::directory_iterator(p)) {
 		std::string sss{ entry.path().u8string() };
 		OutputDebugString(L""+(sss)+"\n");
-		timelineAddEnd(tl, entry_create(sss.c_str(), tlpar, impar, iii), NULL);
+		timelineAddEnd(tl, entry_create(sss.c_str(), tlpar, impar, iii), camEntry_create(0, 0, 0, 1, 0, EList::derived));
 		progress->Update(iii);
 		//TODO remove 
 		iii++;
@@ -115,7 +116,7 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 		}
 		//timelineAddEnd(tl, mkEntry(sss));
 	}
-	timelineAddEnd(ctl, NULL,camEntry_create(0, 0, 0, 1, 0, 0));
+	
 	progress->Destroy();
 }
 
