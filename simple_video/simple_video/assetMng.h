@@ -12,11 +12,12 @@ typedef struct frame* TIMELINE; //+
 
 struct frame {
 	struct entry* entry;
+	struct camEntry* camEntry;
 	struct frame* next;
 };
 TIMELINE mkTimeline();
 
-void timelinAdd(TIMELINE head, struct entry* e, int loc);
+void timelinAdd(TIMELINE head, struct entry* e, camEntry* ce,int loc);
 
 
 void deleteTimeline(TIMELINE head);
@@ -34,6 +35,7 @@ public:
 	//linked list?
 public:
 	TIMELINE tl= NULL;
+	TIMELINE ctl = NULL;
 	void addFolder(std::string p, wxWindow* tlpar, wxPanel* impar);
 	bool exportFolder(std::string p);
 	void nextFrame();

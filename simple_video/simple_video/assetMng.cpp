@@ -13,14 +13,16 @@ struct frame* mkTimeline() {
 	struct frame* f = (struct frame*) malloc(sizeof(struct frame));
 	f->next = NULL;
 	f->entry = NULL;
+	f->camEntry = NULL;
 	return f;
 
 }
 
-void timelineAdd(TIMELINE head, struct entry* p, int loc) {
+void timelineAdd(TIMELINE head, struct entry* p,struct camEntry* ce, int loc) {
 	struct frame* f = (struct frame*) malloc(sizeof(struct frame));
 	f->next = NULL;
 	f->entry = p;
+	f->camEntry = ce;
 	if (head->next == NULL) {
 		head->next = f;
 		return;
@@ -39,10 +41,11 @@ void timelineAdd(TIMELINE head, struct entry* p, int loc) {
 	nav->next = f;
 }
 
-void timelineAddEnd(TIMELINE head, struct entry* p) {
+void timelineAddEnd(TIMELINE head, struct entry* p, struct camEntry* ce) {
 	struct frame* f = (struct frame*) malloc(sizeof(struct frame));
 	f->next = NULL;
 	f->entry = p;
+	f->camEntry = ce;
 	if (head->next == NULL) {
 		head->next = f;
 		return;
@@ -85,6 +88,7 @@ void deleteFrame(struct frame* f) {
 int mLoad = 96;
 void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	if(tl==NULL)tl = mkTimeline();
+	if(ctl == NULL)ctl = mkTimeline();
 	int iii = 0;
 	//entry* e[10];
 	//for (int i = 0; i < 10; i++) {
@@ -102,7 +106,7 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	for (const auto& entry : std::filesystem::directory_iterator(p)) {
 		std::string sss{ entry.path().u8string() };
 		OutputDebugString(L""+(sss)+"\n");
-		timelineAddEnd(tl, entry_create(sss.c_str(), tlpar, impar, iii));
+		timelineAddEnd(tl, entry_create(sss.c_str(), tlpar, impar, iii), NULL);
 		progress->Update(iii);
 		//TODO remove 
 		iii++;
@@ -111,6 +115,7 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 		}
 		//timelineAddEnd(tl, mkEntry(sss));
 	}
+	timelineAddEnd(ctl, NULL,camEntry_create(0, 0, 0, 1, 0, 0));
 	progress->Destroy();
 }
 
@@ -141,6 +146,7 @@ bool assetMng::exportFolder(std::string p) {
 		head = head->next;
 	}
 	progress->Destroy();
+	return true;
 }
 
 void assetMng::nextFrame() {
