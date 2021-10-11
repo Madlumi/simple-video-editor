@@ -29,7 +29,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	menuFile->Append(EList::MenuNew, "New");
 	menuFile->Append(EList::MenuOpen, "Open");
 	menuFile->Append(EList::MenuSave, "Save");
-	menuFile->AppendSeparator();
+	menuFile->AppendSeparator(); 
 	menuFile->Append(EList::MenuImport, "Import");
 	menuFile->Append(EList::MenuExport, "Export");
 	menuFile->AppendSeparator();
@@ -55,7 +55,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 
 	botPanel = new wxPanel(splitterV, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
 	botPanel->SetBackgroundColour(wxColor(25, 0, 100));
-
+	
 	tlScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(2000, 50), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
 	tlScroller->SetBackgroundColour(wxColor(5, 2, 5));
 	tlScroller->SetVirtualSize(wxSize(4000, 300));
@@ -68,6 +68,8 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 
 	frame = new wxPanel(splitter, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
 	
+	viewwindowthingie = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(250, 250), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
+	frame2 = new wxPanel(viewwindowthingie, wxID_ANY, wxPoint(0, 0), wxSize(500, 500));
 	//varius definers--------------------------------
 	tim = new wxTimer(this, EList::Timer);
 	nextf = new wxButton(playPanel, EList::Nextf, ">");
@@ -90,7 +92,8 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	wxBoxSizer* playSizer = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* tlSizer = new wxBoxSizer(wxHORIZONTAL);
 
-	
+	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer* sizer3stupidname = new wxBoxSizer(wxHORIZONTAL);
 
 	playPanel->SetSizer(playSizer);
 	tlScroller->SetSizer(tlScrSizer);
@@ -98,6 +101,8 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	botPanel->SetSizer(botSizer);
 	//sizer->Add(drawPane, 1, wxEXPAND);
 	frame->SetSizer(sizer);
+	frame2->SetSizer(sizer2);
+	viewwindowthingie->SetSizer(sizer3stupidname);
 	
 	//sizer2->Add(frame, 1, wxEXPAND | wxALL, 5);
 	//sizer2->Add(topPanel, 1, wxEXPAND | wxALL, 5);
@@ -121,7 +126,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	botPanel->GetSizer()->Add(tlScroller, 1, wxEXPAND);
 
 	tlScroller->GetSizer()->Add(tlPanel, 0, wxEXPAND);
-	
+	frame->GetSizer()->Add(viewwindowthingie, 1, wxEXPAND);
 
 	playPanel->GetSizer()->Add(prevf, 0, wxEXPAND);
 	playPanel->GetSizer()->Add(play, 0, wxEXPAND);
@@ -189,7 +194,7 @@ void cMain::MenuImport(wxCommandEvent& evt) {
 
 
 	
-	assets->addFolder(dirDial.GetPath().ToStdString(),tlPanel, frame);
+	assets->addFolder(dirDial.GetPath().ToStdString(),tlPanel, frame2);
 	this->Layout();
 	
 

@@ -52,10 +52,12 @@ public:
     wxPanel* tlPanel;
 
     wxScrolledWindow* tlScroller;
+    wxScrolledWindow* viewwindowthingie;
     //new wxScrolled(NULL, wxID_ANY, wxPoint(500, 50), wxSize(50, 50),wxHSCROLL | wxVSCROLL, wxT("scrolledWindow"));
 
     wxString path;
     wxPanel* frame;
+    wxPanel* frame2;
     wxImagePanel* drawPane;
     wxPanel* panel2;
     wxImagePanel* drawPane2;

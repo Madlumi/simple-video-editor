@@ -13,8 +13,18 @@ struct entry {
     void show();
 
 };
+struct camEntry {
+    int hold;
+    double x;
+    double y;
+    double scale;
+    double r;
+    int type;
+};
 
 struct entry* entry_create(const char* str, wxWindow* tl, wxPanel* imgframe,int i);
+
+struct camEntry* camEntry_create(int frame, double x, double y, double scale, double r, int type);
 
 //why class?
 class Entry {

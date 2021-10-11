@@ -44,6 +44,16 @@ struct entry* entry_create(const char* str, wxWindow* tl, wxPanel* imgframe, int
 	return e;
 }
 
+camEntry* camEntry_create(int frame, double x, double y, double scale, double r, int type) {
+	struct camEntry* e = (struct entry*) malloc(sizeof(struct entry));
+	e->hold = frame;
+	e->x = x;
+	e->y = y;
+	e->scale = scale;
+	e->r = r;
+	e->type = type;
+}
+
 wxWindow* GetTopParent(wxWindow* pWindow) {
 	wxWindow* pWin = pWindow;
 	while (true) {
