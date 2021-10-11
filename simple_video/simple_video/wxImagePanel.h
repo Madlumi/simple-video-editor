@@ -2,6 +2,7 @@
 #include <wx/wx.h>
 #include <wx/sizer.h>
 
+
 class wxImagePanel : public wxPanel {
     wxImage image;
     wxBitmap resized;
@@ -15,7 +16,7 @@ public:
     void paintNow();
     void OnSize(wxSizeEvent& event);
     void render(wxDC& dc);
-    void exportFrame(std::string p, int i);
+    void exportFrame(std::string p, int i, double scale, wxPoint loc, double r);
     // some useful events
     /*
      void mouseMoved(wxMouseEvent& event);

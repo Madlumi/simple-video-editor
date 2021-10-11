@@ -107,7 +107,7 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	for (const auto& entry : std::filesystem::directory_iterator(p)) {
 		std::string sss{ entry.path().u8string() };
 		OutputDebugString(L""+(sss)+"\n");
-		timelineAddEnd(tl, entry_create(sss.c_str(), tlpar, impar, iii), camEntry_create(0, 0, 0, 1, 0, EList::derived));
+		timelineAddEnd(tl, entry_create(sss.c_str(), tlpar, impar, iii), camEntry_create(0, 0, 0, 1.2, 0, EList::derived));
 		progress->Update(iii);
 		//TODO remove 
 		iii++;
@@ -141,7 +141,7 @@ bool assetMng::exportFolder(std::string p) {
 		//head->next->entry->img->Show(true);
 		//head->entry->img->Show(false);
 		//head->next->entry->img->Layout();
-		head->entry->img->exportFrame(p,frameN);
+		head->entry->img->exportFrame(p,frameN,head->camEntry->scale,wxPoint(head->camEntry->x, head->camEntry->y), head->camEntry->r);
 		frameN++;
 		progress->Update(frameN);
 		head = head->next;
