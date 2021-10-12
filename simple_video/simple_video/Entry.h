@@ -20,6 +20,7 @@ struct camEntry {
     double scale;
     double r;
     int type;
+    void update(entry* e);
 };
 
 struct entry* entry_create(const char* str, wxWindow* tl, wxPanel* imgframe,int i);

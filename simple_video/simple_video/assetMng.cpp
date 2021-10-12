@@ -162,6 +162,7 @@ void assetMng::nextFrame() {
 	while (head->next != NULL) {
 		if (head->entry->img->IsShown()) {
 			head->next->entry->show();
+			head->next->camEntry->update(head->next->entry);
 			head->entry->hide();
 			return;
 		}
@@ -169,6 +170,7 @@ void assetMng::nextFrame() {
 		head = head->next;
 	}
 	tl->next->entry->show();
+	tl->next->camEntry->update(tl->next->entry);
 	head->entry->hide();
 }
 void assetMng::prevFrame() {
