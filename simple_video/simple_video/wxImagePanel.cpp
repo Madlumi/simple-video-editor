@@ -107,7 +107,7 @@ void wxImagePanel::render(wxDC& dc) {
     }
 
     dc.SetBrush(*wxTRANSPARENT_BRUSH);
-    dc.DrawRectangle(p,wxSize(w/s,h/s));
+    dc.DrawRectangle(wxPoint(p.x/s,p.y/s),wxSize(w/s,h/s));
 }
 
 /*

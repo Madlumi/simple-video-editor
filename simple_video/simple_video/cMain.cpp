@@ -21,23 +21,13 @@ wxEND_EVENT_TABLE()
 cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)) {
 	assets = new assetMng();
 	//top bar-------------------------------------
+	
+	
 	this->SetMinSize(wxSize(500,400));
-	menuBar = new wxMenuBar();
+	menuBar = initmenu();
 	this->SetMenuBar(menuBar);
 
-	wxMenu* menuFile = new wxMenu;
 	
-	menuFile->Append(EList::MenuNew, "New");
-	menuFile->Append(EList::MenuOpen, "Open");
-	menuFile->Append(EList::MenuSave, "Save");
-	menuFile->AppendSeparator(); 
-	menuFile->Append(EList::MenuImport, "Import");
-	menuFile->Append(EList::MenuExport, "Export");
-	menuFile->AppendSeparator();
-	menuFile->Append(EList::MenuExit, "Exit");
-
-	
-	menuBar->Append(menuFile, "File");
 	//-----------------------------------------
 
 	// make sure to call this first
@@ -229,7 +219,23 @@ void cMain::MenuExport(wxCommandEvent& evt) {
 
 
 }
+wxMenuBar* initmenu() {
+	wxMenuBar* mb = new wxMenuBar();
 
+	wxMenu* menuFile = new wxMenu;
+	menuFile->Append(EList::MenuNew, "New");
+	menuFile->Append(EList::MenuOpen, "Open");
+	menuFile->Append(EList::MenuSave, "Save");
+	menuFile->AppendSeparator();
+	menuFile->Append(EList::MenuImport, "Import");
+	menuFile->Append(EList::MenuExport, "Export");
+	menuFile->AppendSeparator();
+	menuFile->Append(EList::MenuExit, "Exit");
+
+	mb->Append(menuFile, "File");
+
+	return mb;
+}
 void cMain::MenuExit(wxCommandEvent& evt) {
 	Close();
 	evt.Skip();
