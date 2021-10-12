@@ -99,5 +99,5 @@ void entry::show() {
 
 void camEntry::update(entry* e) {
 	e->img->p = wxPoint(x, y);
-	e->img->s = wxSize(500, 300);
+	e->img->s = scale;
 }
