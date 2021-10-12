@@ -68,8 +68,10 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 
 	frame = new wxPanel(splitter, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
 	
-	viewwindowthingie = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(250, 250), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
-	frame2 = new wxPanel(viewwindowthingie, wxID_ANY, wxPoint(0, 0), wxSize(500, 500));
+	viewwindowthingie = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(600, 600), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
+	viewwindowthingie->SetVirtualSize(wxSize(1920, 1080));
+	viewwindowthingie->SetScrollRate(1, 1);
+	frame2 = new wxPanel(viewwindowthingie, wxID_ANY, wxPoint(0, 0), wxSize(1920, 1080));
 	//varius definers--------------------------------
 	tim = new wxTimer(this, EList::Timer);
 	nextf = new wxButton(playPanel, EList::Nextf, ">");
@@ -102,7 +104,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	//sizer->Add(drawPane, 1, wxEXPAND);
 	frame->SetSizer(sizer);
 	frame2->SetSizer(sizer2);
-	viewwindowthingie->SetSizer(sizer3stupidname);
+	//viewwindowthingie->SetSizer(sizer3stupidname);
 	
 	//sizer2->Add(frame, 1, wxEXPAND | wxALL, 5);
 	//sizer2->Add(topPanel, 1, wxEXPAND | wxALL, 5);

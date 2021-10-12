@@ -27,7 +27,7 @@ struct entry* entry_create(const char* str, wxWindow* tl, wxPanel* imgframe, int
 	e->btn->SetBitmap(bitmap);
 	e->btn->SetBitmapMargins(-4,0);
 	e->btn->SetBitmapPosition(wxLEFT);
-	//tl->GetSizer()->Add(e->btn, 1, wxEXPAND);
+	tl->GetSizer()->Add(e->btn, 1, wxEXPAND);
 	//wxString path = wxGetCwd() + wxT("/pot.png");
 	wxString path = wxString::FromUTF8(str);
 	OutputDebugString(L"" + (path)+"\n");
