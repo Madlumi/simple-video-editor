@@ -2,20 +2,21 @@
 #include "EList.h"
 #include "Entry.h"
 
-wxBEGIN_EVENT_TABLE(cMain,wxFrame)
-	EVT_BUTTON(10000, OnbtnClck)
-	EVT_MENU(EList::MenuNew, MenuNew)
-	EVT_MENU(EList::MenuOpen, MenuOpen)
-	EVT_MENU(EList::MenuExit, MenuExit)
-	EVT_MENU(EList::MenuImport, MenuImport)
-	EVT_MENU(EList::MenuExport, MenuExport)
-	EVT_BUTTON(EList::Nextf, BtnNextF)
-	EVT_BUTTON(EList::prevf, BtnPrevF)
-	EVT_BUTTON(EList::play , BtnPlay)
+wxBEGIN_EVENT_TABLE(cMain, wxFrame)
+EVT_BUTTON(10000, OnbtnClck)
+EVT_MENU(EList::MenuNew, MenuNew)
+EVT_MENU(EList::MenuOpen, MenuOpen)
+EVT_MENU(EList::MenuExit, MenuExit)
+EVT_MENU(EList::MenuImport, MenuImport)
+EVT_MENU(EList::MenuExport, MenuExport)
+EVT_BUTTON(EList::Nextf, BtnNextF)
+EVT_BUTTON(EList::prevf, BtnPrevF)
+EVT_BUTTON(EList::play, BtnPlay)
 
 
-	EVT_TIMER(EList::Timer, TimNextF)
+EVT_TIMER(EList::Timer, TimNextF)
 wxEND_EVENT_TABLE()
+
 
 cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)) {
 	assets = new assetMng();
@@ -68,10 +69,9 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 
 	frame = new wxPanel(splitter, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
 	
-	viewwindowthingie = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(600, 600), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
-	viewwindowthingie->SetVirtualSize(wxSize(1920, 1080));
-	viewwindowthingie->SetScrollRate(1, 1);
-	frame2 = new wxPanel(viewwindowthingie, wxID_ANY, wxPoint(0, 0), wxSize(1920, 1080));
+	DisplayScroller = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(600, 600), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
+	
+	frame2 = new wxPanel(DisplayScroller, wxID_ANY, wxPoint(0, 0), wxSize(1920, 1080));
 	//varius definers--------------------------------
 	tim = new wxTimer(this, EList::Timer);
 	nextf = new wxButton(playPanel, EList::Nextf, ">");
@@ -95,7 +95,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	wxBoxSizer* tlSizer = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
-	wxBoxSizer* sizer3stupidname = new wxBoxSizer(wxHORIZONTAL);
+	//wxBoxSizer* sizer3stupidname = new wxBoxSizer(wxHORIZONTAL);
 
 	playPanel->SetSizer(playSizer);
 	tlScroller->SetSizer(tlScrSizer);
@@ -104,8 +104,11 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	//sizer->Add(drawPane, 1, wxEXPAND);
 	frame->SetSizer(sizer);
 	frame2->SetSizer(sizer2);
-	//viewwindowthingie->SetSizer(sizer3stupidname);
+	//DisplayScroller->SetSizer(sizer3stupidname);
 	
+	DisplayScroller->SetVirtualSize(wxSize(1920, 1080));
+	DisplayScroller->SetScrollRate(2, 2);
+
 	//sizer2->Add(frame, 1, wxEXPAND | wxALL, 5);
 	//sizer2->Add(topPanel, 1, wxEXPAND | wxALL, 5);
 	//this->SetSizer(sizer2);
@@ -128,7 +131,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	botPanel->GetSizer()->Add(tlScroller, 1, wxEXPAND);
 
 	tlScroller->GetSizer()->Add(tlPanel, 0, wxEXPAND);
-	frame->GetSizer()->Add(viewwindowthingie, 1, wxEXPAND);
+	frame->GetSizer()->Add(DisplayScroller, 1, wxEXPAND);
 
 	playPanel->GetSizer()->Add(prevf, 0, wxEXPAND);
 	playPanel->GetSizer()->Add(play, 0, wxEXPAND);
@@ -153,6 +156,14 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 }
 
 cMain::~cMain() {}
+void cMain::ZoomDisplay(double s) {
+	int x; int y;
+	DisplayScroller->GetVirtualSize(&x,&y);
+	DisplayScroller->SetVirtualSize(x*s,y*s);
+	frame2->SetSize(x*s, y*s);
+
+	DisplayScroller->Layout();
+}
 void cMain::OnbtnClck(wxCommandEvent& evt) {
 	//lst->AppendString(txt->GetValue());
 	//OutputDebugStringA("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
@@ -201,6 +212,7 @@ void cMain::MenuImport(wxCommandEvent& evt) {
 	
 
 		//std::cout << entry.path() << std::endl;
+	ZoomDisplay(.1);
 }
 
 void cMain::MenuExport(wxCommandEvent& evt) {

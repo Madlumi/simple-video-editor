@@ -84,10 +84,14 @@ void Entry::clicked(){
 void entry::hide() {
 	img->Show(false);
 	btn->Enable(true);
+	img->GetParent()->Layout();
+	//img->paintNow();//idk bout thois one mate
 }
 
 void entry::show() {
-	img->paintNow();//idk bout thois one mate
+	//
+	
 	img->Show(true);
+	
 	btn->Enable(false);
 }

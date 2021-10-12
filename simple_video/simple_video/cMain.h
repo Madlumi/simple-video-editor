@@ -28,7 +28,7 @@ public:
     wxButton* play = nullptr;
     wxTimer* tim = nullptr;
     
-
+    void ZoomDisplay(double s);
     void OnbtnClck(wxCommandEvent &evt);
     
     void BtnNextF(wxCommandEvent& evt);
@@ -52,7 +52,7 @@ public:
     wxPanel* tlPanel;
 
     wxScrolledWindow* tlScroller;
-    wxScrolledWindow* viewwindowthingie;
+    wxScrolledWindow* DisplayScroller;
     //new wxScrolled(NULL, wxID_ANY, wxPoint(500, 50), wxSize(50, 50),wxHSCROLL | wxVSCROLL, wxT("scrolledWindow"));
 
     wxString path;
