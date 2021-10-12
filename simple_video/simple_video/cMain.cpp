@@ -57,7 +57,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	botPanel = new wxPanel(splitterV, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
 	botPanel->SetBackgroundColour(wxColor(25, 0, 100));
 	
-	tlScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(2000, 50), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
+	tlScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(2000, 50), wxHSCROLL | wxVSCROLL , wxT("scrolledWindow"));//wxALWAYS_SHOW_SB
 	tlScroller->SetBackgroundColour(wxColor(5, 2, 5));
 	tlScroller->SetVirtualSize(wxSize(4000, 300));
 	playPanel = new wxPanel(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
@@ -212,7 +212,7 @@ void cMain::MenuImport(wxCommandEvent& evt) {
 	
 
 		//std::cout << entry.path() << std::endl;
-	ZoomDisplay(.1);
+	ZoomDisplay(.9);
 }
 
 void cMain::MenuExport(wxCommandEvent& evt) {

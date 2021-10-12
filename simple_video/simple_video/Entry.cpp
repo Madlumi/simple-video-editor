@@ -90,7 +90,8 @@ void entry::hide() {
 
 void entry::show() {
 	//
-	
+	img->p = wxPoint(x, y);
+	img->s=wxSize(500,300);
 	img->Show(true);
 	
 	btn->Enable(false);

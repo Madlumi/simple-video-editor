@@ -87,6 +87,7 @@ void deleteFrame(struct frame* f) {
 	free(f);
 }
 int mLoad = 96;
+
 void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	if(tl==NULL)tl = mkTimeline();
 	

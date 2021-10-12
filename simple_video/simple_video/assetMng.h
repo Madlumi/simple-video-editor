@@ -34,6 +34,7 @@ public:
 //array(2):easy removal,adding, moving around sections
 	//linked list?
 public:
+
 	TIMELINE tl= NULL;
 	void addFolder(std::string p, wxWindow* tlpar, wxPanel* impar);
 	bool exportFolder(std::string p);

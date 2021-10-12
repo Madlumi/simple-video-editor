@@ -1,5 +1,5 @@
 #include "wxImagePanel.h"
-
+#include "assetMng.h"
 
 
 BEGIN_EVENT_TABLE(wxImagePanel, wxPanel)
@@ -101,9 +101,13 @@ void wxImagePanel::render(wxDC& dc) {
         w = neww;
         h = newh;
         dc.DrawBitmap(resized, 0, 0, false);
+       
     } else {
         dc.DrawBitmap(resized, 0, 0, false);
     }
+
+    dc.SetBrush(*wxTRANSPARENT_BRUSH);
+    dc.DrawRectangle(p,s);
 }
 
 /*

@@ -10,6 +10,8 @@ class wxImagePanel : public wxPanel {
     double asp;
 
 public:
+    wxPoint p = wxPoint(0, 0);
+    wxSize s = wxSize(1, 1);
     wxImagePanel(wxPanel* parent, wxString file, wxBitmapType format);
 
     void paintEvent(wxPaintEvent& evt);
