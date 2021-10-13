@@ -59,7 +59,11 @@ void TlSlider::mouseMoved(wxMouseEvent& event) {
     
 }
 void TlSlider::mouseDown(wxMouseEvent& event) {
-    getClickPoint(points, event.GetPosition());
+    frame *f=getClickPoint(points, event.GetPosition());
+    if (f != NULL) {
+        heldPoint = f;
+        heldPoint->camEntry->type = brush;
+    }
 }
 void TlSlider::mouseReleased(wxMouseEvent& event) {
     heldPoint = NULL;
@@ -106,10 +110,25 @@ void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
     while (head->next != NULL) {
         /* pointbrush */
         if (head->camEntry != NULL) {
-            dc.SetBrush(*wxGREEN_BRUSH); // green filling
-            dc.SetPen(wxPen(wxColor(255, 0, 0), 0)); // 5-pixels-thick red outline
+            int d =  p_diam;
+            if (head->camEntry->type == EList::derived) {
+                dc.SetBrush(wxBrush(wxColor(100, 100, 100), wxBRUSHSTYLE_SOLID));
+                dc.SetPen(wxPen(wxColor(200, 200, 25), -1));
+                d--;
+            }else if (head->camEntry->type == EList::hard) {
+                dc.SetBrush(wxBrush(wxColor(200, 200, 25), wxBRUSHSTYLE_SOLID));
+                dc.SetPen(wxPen(wxColor(200, 200, 25), -1));
+            }
+            else if (head->camEntry->type == EList::linear) {
+                dc.SetBrush(wxBrush(wxColor(25, 200, 25), wxBRUSHSTYLE_SOLID));
+                dc.SetPen(wxPen(wxColor(25, 200, 25), -1));
+            }
+            else if (head->camEntry->type == EList::smooth) {
+                dc.SetBrush(wxBrush(wxColor(25, 50, 200), wxBRUSHSTYLE_SOLID));
+                dc.SetPen(wxPen(wxColor(25, 200, 25), -1));
+            }
 
-            dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->scale) ), p_diam);
+            dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->scale) ), d);
 
         }
 
@@ -143,7 +162,7 @@ void stupidvsoutput(int i) {
     OutputDebugStringA(num_char);
     OutputDebugStringA("\n");
 }
-void TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
+frame* TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
     int i = 0;
     while (head->next != NULL) {
         /* pointbrush */
@@ -157,9 +176,8 @@ void TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
                 < (p_diam*p_diam)) {
 
                 stupidvsoutput(i);
-              
-                heldPoint = head;
-                return;
+
+                return head;
             }
             
             //dc.DrawCircle(wxPoint(i * p_dist, midY + (1 - head->camEntry->scale) * 100 - 50), p_diam);
@@ -171,10 +189,12 @@ void TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
 
 
     }
+    return NULL;
 }
 void drawBg(wxDC& dc) {
-    dc.SetBrush(*wxBLACK_BRUSH); // blue filling
-    dc.SetPen(wxPen(wxColor(200, 200, 200), 1)); // 10-pixels-thick pink outline
+    dc.SetBrush(wxBrush(wxColor(200, 200, 200), wxBRUSHSTYLE_SOLID));
+    dc.SetPen(wxPen(wxColor(150, 150, 150), 1));
+    
     int boxsize = 100;
     for (int x = 0; x < dc.GetSize().GetWidth()/100; x++) {
         for (int y = 0; y < dc.GetSize().GetHeight() / 100; y++) {

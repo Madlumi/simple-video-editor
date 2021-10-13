@@ -10,6 +10,7 @@ public:
     int p_dist = 15;
     int p_diam = 6;
     int midY = 200;
+    int brush = EList::linear;
     TIMELINE points=NULL;
     frame* heldPoint = NULL;
 
@@ -29,7 +30,7 @@ public:
     void drawPoints(wxDC& dc, struct frame* head);
     int scaleToY(double s);
     double scaleToY_NEG(int i);
-    void getClickPoint(frame* head, wxPoint cp);
+    frame* getClickPoint(frame* head, wxPoint cp);
     void render(wxDC& dc);
 
     // some useful events
