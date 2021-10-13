@@ -25,13 +25,14 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	this->SetMenuBar(menuBar);
 	wxInitAllImageHandlers();
 
+
+
 	wxSplitterWindow* splitterV = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
-	
-	wxSplitterWindow* splitter = new wxSplitterWindow(splitterV, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
+	//wxSplitterWindow* splitter = new wxSplitterWindow(splitterV, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
 	
 	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
-	topPanel = new wxPanel(splitter, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
-	topPanel->SetBackgroundColour(wxColor(100,100,100));
+	//topPanel = new wxPanel(splitter, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
+	//topPanel->SetBackgroundColour(wxColor(100,100,100));
 
 	
 
@@ -48,7 +49,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 
 	
 
-	frame = new wxPanel(splitter, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
+	frame = new wxPanel(splitterV, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
 	
 	DisplayScroller = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(600, 600), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
 	
@@ -113,12 +114,12 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	//this->SetSizer(sizer2);
 
 	//splitter balongas-----------------------------------------
-	splitter->SetMinimumPaneSize(100);
-	splitter->SetSashGravity(1);
+	//splitter->SetMinimumPaneSize(100);
+	//splitter->SetSashGravity(1);
 	splitterV->SetSashGravity(1);
-	splitter->SplitVertically(frame, topPanel);
+	//splitter->SplitVertically(frame, topPanel);
 	splitterV->SetMinimumPaneSize(100);
-	splitterV->SplitHorizontally(splitter, botPanel);
+	splitterV->SplitHorizontally(frame, botPanel);
 	
 	//splitter->SetSashPosition(128*3);
 	//splitterV->SetSashPosition( 100);
@@ -137,7 +138,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	playPanel->GetSizer()->Add(nextf, 0, wxEXPAND);
 
 
-	splitter->SetSashPosition(128 * 3);
+	//splitter->SetSashPosition(128 * 3);
 	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	//panel2 = new wxPanel(this, wxID_ANY, wxPoint(550, 50), wxSize(300, 300));
 	// then simply create like this
