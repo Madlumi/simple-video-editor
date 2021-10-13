@@ -9,7 +9,7 @@
 #include <iostream>
 #include <wx/timer.h>
 #include <wx/scrolwin.h>
-
+#include "TlSliders.h"
 #include "assetMng.h"
 
 class cMain :public wxFrame {
@@ -29,6 +29,9 @@ public:
     wxTimer* tim = nullptr;
     
     void ZoomDisplay(double s);
+
+    void onTlScroll(wxScrollWinEvent& event);
+
     void OnbtnClck(wxCommandEvent &evt);
     
     void BtnNextF(wxCommandEvent& evt);
@@ -51,15 +54,17 @@ public:
     wxPanel* botPanel;
     wxPanel* playPanel;
     wxPanel* tlPanel;
-
+    
     wxScrolledWindow* TimelineScroller;
     wxScrolledWindow* TimelinePointScroller;
     wxScrolledWindow* DisplayScroller;
+    TlSlider* PointDrawPanle;
     //new wxScrolled(NULL, wxID_ANY, wxPoint(500, 50), wxSize(50, 50),wxHSCROLL | wxVSCROLL, wxT("scrolledWindow"));
 
     wxString path;
     wxPanel* frame;
     wxPanel* frame2;
+    wxPanel* tlpframe;
     wxImagePanel* drawPane;
     wxPanel* panel2;
     wxImagePanel* drawPane2;

@@ -19,7 +19,7 @@ BEGIN_EVENT_TABLE(wxImagePanel, wxPanel)
     EVT_PAINT(wxImagePanel::paintEvent)
     //Size event
     EVT_SIZE(wxImagePanel::OnSize)
-    END_EVENT_TABLE()
+END_EVENT_TABLE()
 
 
     // some useful events

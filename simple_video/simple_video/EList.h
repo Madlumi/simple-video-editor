@@ -12,6 +12,7 @@ class EList {
 			prevf = 10008,
 			play = 10009,
 			Timer = 10010,
+			TlpScroll = 10011,
 		};
 		enum cam {
 			derived = 0,

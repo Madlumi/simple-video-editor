@@ -13,6 +13,7 @@ EVT_BUTTON(EList::Nextf, BtnNextF)
 EVT_BUTTON(EList::prevf, BtnPrevF)
 EVT_BUTTON(EList::play, BtnPlay)
 
+EVT_SCROLLWIN(onTlScroll)
 
 EVT_TIMER(EList::Timer, TimNextF)
 wxEND_EVENT_TABLE()
@@ -54,18 +55,23 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	DisplayScroller = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(600, 600), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
 	
 	TimelineScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(0, 0), wxSize(100, 21), wxHSCROLL, wxT("scrolledWindow"));
-	TimelinePointScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(0, 0), wxSize(1920, 120), wxVSCROLL, wxT("scrolledWindow"));
+	TimelinePointScroller = new wxScrolledWindow(botPanel, EList::TlpScroll, wxPoint(0, 0), wxSize(20, 20), wxVSCROLL, wxT("scrolledWindow"));
 	
 	DisplayScroller->SetBackgroundColour(wxColor(200, 200, 200));
 	TimelineScroller->SetBackgroundColour(wxColor(130, 130, 130));
 	TimelinePointScroller->SetBackgroundColour(wxColor(25, 25, 25));
 
-
+	
 
 	//tlPanel = new wxPanel(TimelineScroller, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
 	//tlPanel->SetBackgroundColour(wxColor(25, 200, 50));
 
 	frame2 = new wxPanel(DisplayScroller, wxID_ANY, wxPoint(0, 0), wxSize(1920, 1080));
+
+	tlpframe = new wxPanel(TimelinePointScroller, wxID_ANY, wxPoint(0, 0), wxSize(500, 500));
+	tlpframe->SetBackgroundColour(wxColor(250, 250, 250));
+	PointDrawPanle = new TlSlider(tlpframe);
+	
 	//varius definers--------------------------------
 	tim = new wxTimer(this, EList::Timer);
 	nextf = new wxButton(playPanel, EList::Nextf, ">");
@@ -87,10 +93,10 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 
 	wxBoxSizer* playSizer = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* tlSizer = new wxBoxSizer(wxHORIZONTAL);
-
+	wxBoxSizer* tlpSizer = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
 	//wxBoxSizer* sizer3stupidname = new wxBoxSizer(wxHORIZONTAL);
-
+	
 	playPanel->SetSizer(playSizer);
 	//TimelineScroller->SetSizer(tlScrSizer);
 	//tlPanel->SetSizer(tlSizer);
@@ -100,7 +106,8 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	frame2->SetSizer(sizer2);
 	//DisplayScroller->SetSizer(sizer3stupidname);
 	
-	
+
+
 	DisplayScroller->SetVirtualSize(wxSize(1920, 1080));
 	DisplayScroller->SetScrollRate(4, 4);
 	TimelineScroller->ShowScrollbars(wxSHOW_SB_NEVER, wxSHOW_SB_NEVER);
@@ -137,6 +144,8 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	playPanel->GetSizer()->Add(play, 0, wxEXPAND);
 	playPanel->GetSizer()->Add(nextf, 0, wxEXPAND);
 
+	tlpframe->SetSizer(tlpSizer);
+	tlpSizer->Add(PointDrawPanle, 1, wxEXPAND);
 
 	//splitter->SetSashPosition(128 * 3);
 	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
@@ -152,7 +161,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	//txt = new wxTextCtrl(this, wxID_ANY, "", wxPoint(15, 90), wxSize(150, 50));
 	//lst = new wxListBox(this, wxID_ANY, wxPoint(250, 15), wxSize(500, 200));
 
-	
+
 }
 
 cMain::~cMain() {}
@@ -164,6 +173,15 @@ void cMain::ZoomDisplay(double s) {
 
 	DisplayScroller->Layout();
 }
+void cMain::onTlScroll(wxScrollWinEvent& event) {
+	exit(NULL);
+	OutputDebugStringA("scrolllllllllllllllllllllllllllllllllllllllllllllllllll");
+	TimelineScroller->Scroll(10,0);
+	event.Skip();
+}
+
+
+
 void cMain::OnbtnClck(wxCommandEvent& evt) {
 	//lst->AppendString(txt->GetValue());
 	//OutputDebugStringA("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
@@ -171,6 +189,9 @@ void cMain::OnbtnClck(wxCommandEvent& evt) {
 }
 
 void cMain::BtnNextF(wxCommandEvent& evt) {
+	PointDrawPanle->paintNow();
+	PointDrawPanle->Layout();
+	tlpframe->Layout();
 	assets->nextFrame();
 }
 
