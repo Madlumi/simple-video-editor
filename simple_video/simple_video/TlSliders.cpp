@@ -51,9 +51,12 @@ END_EVENT_TABLE()
 void TlSlider::mouseMoved(wxMouseEvent& event) {
     wp = event.GetPosition();
     if(heldPoint!=NULL){
-        heldPoint->camEntry->scale = scaleToY_NEG(event.GetPosition().y);
+        double d = scaleToY_NEG(event.GetPosition().y);
+
+        heldPoint->camEntry->scale = d;
+        paintNow();
     }
-    paintNow();
+    
 }
 void TlSlider::mouseDown(wxMouseEvent& event) {
     getClickPoint(points, event.GetPosition());
@@ -62,9 +65,9 @@ void TlSlider::mouseReleased(wxMouseEvent& event) {
     heldPoint = NULL;
 }
 void TlSlider::paintEvent(wxPaintEvent& evt) {
-
-    wxPaintDC dc(this);
-    render(dc);
+    //wxPaintDC dc(this);
+    wxBufferedPaintDC dd(this);
+    render(dd);
 }
 
 void TlSlider::initTl(TIMELINE t) {
@@ -87,6 +90,7 @@ void TlSlider::initTl(TIMELINE t) {
  */
 void TlSlider::paintNow() {
     wxClientDC dc(this);
+    //wxBufferedPaintDC dd(this);
     render(dc);
 }
 
@@ -103,7 +107,7 @@ void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
         /* pointbrush */
         if (head->camEntry != NULL) {
             dc.SetBrush(*wxGREEN_BRUSH); // green filling
-            dc.SetPen(wxPen(wxColor(255, 0, 0), p_diam)); // 5-pixels-thick red outline
+            dc.SetPen(wxPen(wxColor(255, 0, 0), 0)); // 5-pixels-thick red outline
 
             dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->scale) ), p_diam);
 
@@ -129,13 +133,31 @@ double TlSlider::scaleToY_NEG(int i) {
     return (double(midY - 50 - i)/100)+1;
     //return midY + (1 - s) * 100 - 50;
 }
+void stupidvsoutput(int i) {
+   
+
+    char num_char[10 + sizeof(char)];
+
+    std::sprintf(num_char, "%d", i);
+
+    OutputDebugStringA(num_char);
+    OutputDebugStringA("\n");
+}
 void TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
     int i = 0;
     while (head->next != NULL) {
         /* pointbrush */
         if (head->camEntry != NULL) {
-            if (((cp.x - i * p_dist) ^ 2 + (cp.y - scaleToY(head->camEntry->scale)) ^ 2) < (p_diam ^ 2)) {
-                
+            if (
+                 (cp.x - i * p_dist)
+                *(cp.x - i * p_dist) +
+                 (cp.y - scaleToY(head->camEntry->scale))
+                *(cp.y - scaleToY(head->camEntry->scale))
+         
+                < (p_diam*p_diam)) {
+
+                stupidvsoutput(i);
+              
                 heldPoint = head;
                 return;
             }
@@ -150,16 +172,21 @@ void TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
 
     }
 }
-
+void drawBg(wxDC& dc) {
+    dc.SetBrush(*wxBLACK_BRUSH); // blue filling
+    dc.SetPen(wxPen(wxColor(200, 200, 200), 1)); // 10-pixels-thick pink outline
+    int boxsize = 100;
+    for (int x = 0; x < dc.GetSize().GetWidth()/100; x++) {
+        for (int y = 0; y < dc.GetSize().GetHeight() / 100; y++) {
+            dc.DrawRectangle(x* boxsize, y* boxsize, boxsize, boxsize);
+        }
+    }
+    //
+}
 void TlSlider::render(wxDC& dc) {
     //dc.Clear();
-    //int s = (int)(scaleToY_NEG(scaleToY(1))*100);
+    drawBg(dc);
 
-    //char num_char[10 + sizeof(char)];
-
-    //std::sprintf(num_char, "%d", s);
-
-    //OutputDebugStringA(num_char);
 
 
     if (points != NULL) { drawPoints(dc, points); };
@@ -173,9 +200,7 @@ void TlSlider::render(wxDC& dc) {
     //dc.DrawCircle(wp, 5 /* radius */);
 
     // draw a rectangle
-    //dc.SetBrush(*wxBLUE_BRUSH); // blue filling
-    //dc.SetPen(wxPen(wxColor(255, 175, 175), 10)); // 10-pixels-thick pink outline
-    //dc.DrawRectangle(0, 0, 200, 200);
+
 
     // draw a line
     dc.SetPen(wxPen(wxColor(0, 0, 0), 3)); // black line, 3 pixels thick

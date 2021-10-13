@@ -3,6 +3,7 @@
 #include "assetMng.h"
 #include "EList.h"
 #include "Entry.h"
+#include <wx/dcbuffer.h>
 class TlSlider : public wxPanel {
 
 public:
