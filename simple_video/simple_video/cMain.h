@@ -44,6 +44,7 @@ public:
     void MenuImport(wxCommandEvent& evt);
     void MenuExport(wxCommandEvent& evt);
     void MenuExit(wxCommandEvent& evt);
+    wxMenuBar* initmenu();
 
     assetMng* assets;
     wxPanel* topPanel;
@@ -51,7 +52,8 @@ public:
     wxPanel* playPanel;
     wxPanel* tlPanel;
 
-    wxScrolledWindow* tlScroller;
+    wxScrolledWindow* TimelineScroller;
+    wxScrolledWindow* TimelinePointScroller;
     wxScrolledWindow* DisplayScroller;
     //new wxScrolled(NULL, wxID_ANY, wxPoint(500, 50), wxSize(50, 50),wxHSCROLL | wxVSCROLL, wxT("scrolledWindow"));
 
