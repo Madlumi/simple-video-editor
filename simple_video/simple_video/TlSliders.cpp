@@ -104,36 +104,41 @@ void TlSlider::paintNow() {
  * (e.g. wxPaintDC or wxClientDC) is used.
  */
 
+void TlSlider::drawPoint(wxDC& dc, struct frame* head,int i, int mid, wxColor c) {
+    if (head->next->camEntry != NULL) {
+        dc.SetPen(wxPen(c, 3));
+        dc.DrawLine(i * p_dist, scaleToY(head->camEntry->scale), (i + 1) * p_dist, scaleToY(head->next->camEntry->scale));
+    }
+
+    int d = p_diam;
+    if (head->camEntry->type == EList::derived) {
+        dc.SetBrush(wxBrush(wxColor(100, 100, 100), wxBRUSHSTYLE_SOLID));
+        dc.SetPen(wxPen(c, 2));
+        d--;
+    } else if (head->camEntry->type == EList::hard) {
+        dc.SetBrush(wxBrush(wxColor(200, 200, 25), wxBRUSHSTYLE_SOLID));
+        dc.SetPen(wxPen(c, 2));
+    } else if (head->camEntry->type == EList::linear) {
+        dc.SetBrush(wxBrush(wxColor(25, 200, 25), wxBRUSHSTYLE_SOLID));
+        dc.SetPen(wxPen(c, 2));
+    } else if (head->camEntry->type == EList::smooth) {
+        dc.SetBrush(wxBrush(wxColor(25, 50, 200), wxBRUSHSTYLE_SOLID));
+        dc.SetPen(wxPen(c, 2));
+    }
+
+    dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->scale)), d);
+
+}
 void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
     int i = 0;
 
     while (head->next != NULL) {
-        /* pointbrush */
         if (head->camEntry != NULL) {
-            if (head->next->camEntry != NULL) {
-                dc.SetPen(wxPen(wxColor(0, 0, 0), 3));
-                dc.DrawLine(i * p_dist, scaleToY(head->camEntry->scale), (i+1) * p_dist, scaleToY(head->next->camEntry->scale));
-            }
 
-            int d =  p_diam;
-            if (head->camEntry->type == EList::derived) {
-                dc.SetBrush(wxBrush(wxColor(100, 100, 100), wxBRUSHSTYLE_SOLID));
-                dc.SetPen(wxPen(wxColor(200, 200, 25), -1));
-                d--;
-            }else if (head->camEntry->type == EList::hard) {
-                dc.SetBrush(wxBrush(wxColor(200, 200, 25), wxBRUSHSTYLE_SOLID));
-                dc.SetPen(wxPen(wxColor(200, 200, 25), -1));
-            }
-            else if (head->camEntry->type == EList::linear) {
-                dc.SetBrush(wxBrush(wxColor(25, 200, 25), wxBRUSHSTYLE_SOLID));
-                dc.SetPen(wxPen(wxColor(25, 200, 25), -1));
-            }
-            else if (head->camEntry->type == EList::smooth) {
-                dc.SetBrush(wxBrush(wxColor(25, 50, 200), wxBRUSHSTYLE_SOLID));
-                dc.SetPen(wxPen(wxColor(25, 200, 25), -1));
-            }
+            if (show_x)drawPoint(dc, head,i, midX, col_x);
+            if (show_y)drawPoint(dc, head, i, midY, col_y);
 
-            dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->scale) ), d);
+            if (show_s)drawPoint(dc, head, i, midS, col_s);
         }
 
         i += 1;
