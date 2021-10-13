@@ -22,7 +22,8 @@ BEGIN_EVENT_TABLE(TlSlider, wxPanel)
  // catch paint events
     EVT_MOTION(TlSlider::mouseMoved)
     EVT_PAINT(TlSlider::paintEvent)
-
+    EVT_LEFT_DOWN(TlSlider::mouseDown)
+    EVT_LEFT_UP(TlSlider::mouseReleased)
 END_EVENT_TABLE()
 
 
@@ -50,6 +51,11 @@ END_EVENT_TABLE()
 void TlSlider::mouseMoved(wxMouseEvent& event) {
     wp = event.GetPosition();
     paintNow();
+}
+void TlSlider::mouseDown(wxMouseEvent& event) {
+    getClickPoint(points, event.GetPosition());
+}
+void TlSlider::mouseReleased(wxMouseEvent& event) {
 }
 void TlSlider::paintEvent(wxPaintEvent& evt) {
     wxPaintDC dc(this);
@@ -87,14 +93,39 @@ void TlSlider::paintNow() {
 
 void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
     int i = 0;
-    int p_dist = 15;
-    int p_diam = 5;
+
     while (head->next != NULL) {
         /* pointbrush */
-        dc.SetBrush(*wxGREEN_BRUSH); // green filling
-        dc.SetPen(wxPen(wxColor(255, 0, 0), 5)); // 5-pixels-thick red outline
+        if (head->camEntry != NULL) {
+            dc.SetBrush(*wxGREEN_BRUSH); // green filling
+            dc.SetPen(wxPen(wxColor(255, 0, 0), p_diam)); // 5-pixels-thick red outline
 
-        dc.DrawCircle(wxPoint(i*p_dist,100), p_diam /* radius */);
+            dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->scale) ), p_diam);
+
+        }
+
+        i += 1;
+        head = head->next;
+
+
+    }
+}
+
+
+int TlSlider::scaleToY(double s) {
+    return midY + (1 - s) * 100 - 50;
+}
+void TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
+    int i = 0;
+    while (head->next != NULL) {
+        /* pointbrush */
+        if (head->camEntry != NULL) {
+            if (((cp.x - i * p_dist) ^ 2 + (cp.y - scaleToY(head->camEntry->scale)) ^ 2) < (p_diam ^ 2)) {
+                OutputDebugStringA("YEEEEHAAAWWWW");
+            }
+            //dc.DrawCircle(wxPoint(i * p_dist, midY + (1 - head->camEntry->scale) * 100 - 50), p_diam);
+
+        }
 
         i += 1;
         head = head->next;
@@ -111,9 +142,9 @@ void TlSlider::render(wxDC& dc) {
     dc.DrawText(wxT("Testing"), 40, 60);
 
     // draw a circle
-    dc.SetBrush(*wxGREEN_BRUSH); // green filling
-    dc.SetPen(wxPen(wxColor(255, 0, 0), 5)); // 5-pixels-thick red outline
-    dc.DrawCircle(wp, 5 /* radius */);
+    //dc.SetBrush(*wxGREEN_BRUSH); // green filling
+    //dc.SetPen(wxPen(wxColor(255, 0, 0), 5)); // 5-pixels-thick red outline
+    //dc.DrawCircle(wp, 5 /* radius */);
 
     // draw a rectangle
     //dc.SetBrush(*wxBLUE_BRUSH); // blue filling

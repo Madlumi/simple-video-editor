@@ -6,11 +6,18 @@
 class TlSlider : public wxPanel {
 
 public:
+    int p_dist = 15;
+    int p_diam = 3;
+    int midY = 200;
     TIMELINE points=NULL;
     
     TlSlider(wxPanel* parent);
     wxPoint wp = wxPoint(0,0);
     void mouseMoved(wxMouseEvent& event);
+
+    void mouseDown(wxMouseEvent& event);
+
+    void mouseReleased(wxMouseEvent& event);
 
     void paintEvent(wxPaintEvent& evt);
 
@@ -18,6 +25,8 @@ public:
 
     void paintNow();
     void drawPoints(wxDC& dc, struct frame* head);
+    int scaleToY(double s);
+    void getClickPoint(frame* head, wxPoint cp);
     void render(wxDC& dc);
 
     // some useful events
