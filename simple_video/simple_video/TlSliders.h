@@ -4,6 +4,8 @@ class TlSlider : public wxPanel {
 
 public:
     TlSlider(wxPanel* parent);
+    wxPoint wp = wxPoint(0,0);
+    void mouseMoved(wxMouseEvent& event);
 
     void paintEvent(wxPaintEvent& evt);
     void paintNow();
