@@ -45,6 +45,8 @@ public:
     void OnbtnClck(wxCommandEvent &evt);
     
     void BtnNextF(wxCommandEvent& evt);
+    void Zoomout(wxCommandEvent& evt);
+    void Zoomin(wxCommandEvent& evt);
     void BtnPrevF(wxCommandEvent& evt);
     void BtnPlay(wxCommandEvent& evt);
 

@@ -13,7 +13,6 @@ class EList {
 			play = 10009,
 			Timer = 10010,
 			TlpScroll = 10011,
-
 			zoomin = 10012,
 			zoomout = 10013,
 			showx = 10014,

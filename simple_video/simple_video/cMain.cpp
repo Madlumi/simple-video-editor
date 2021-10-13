@@ -13,6 +13,9 @@ EVT_BUTTON(EList::Nextf, BtnNextF)
 EVT_BUTTON(EList::prevf, BtnPrevF)
 EVT_BUTTON(EList::play, BtnPlay)
 
+EVT_BUTTON(EList::zoomin, Zoomin)
+EVT_BUTTON(EList::zoomout, Zoomout)
+
 EVT_SCROLLWIN(onTlScroll)
 
 EVT_TIMER(EList::Timer, TimNextF)
@@ -218,6 +221,14 @@ void cMain::OnbtnClck(wxCommandEvent& evt) {
 void cMain::BtnNextF(wxCommandEvent& evt) {
 	
 	assets->nextFrame();
+}
+
+void cMain::Zoomout(wxCommandEvent& evt) {
+	ZoomDisplay(.9);
+}
+
+void cMain::Zoomin(wxCommandEvent& evt) {
+	ZoomDisplay(1.1);
 }
 
 void cMain::BtnPrevF(wxCommandEvent& evt) {
