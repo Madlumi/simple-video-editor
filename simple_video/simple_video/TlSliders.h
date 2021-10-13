@@ -9,7 +9,7 @@ class TlSlider : public wxPanel {
 public:
     int p_dist = 15;
     int p_diam = 6;
-    
+    int heldType=0;
     int brush = EList::linear;
     TIMELINE points=NULL;
     frame* heldPoint = NULL;

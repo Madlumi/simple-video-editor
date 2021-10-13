@@ -51,9 +51,12 @@ END_EVENT_TABLE()
 void TlSlider::mouseMoved(wxMouseEvent& event) {
     wp = event.GetPosition();
     if(heldPoint!=NULL){
-        double d = scaleToY_NEG(event.GetPosition().y,2);
+        
+        if (heldType == EList::sp) { double d = scaleToY_NEG(event.GetPosition().y, heldType); heldPoint->camEntry->scale = d; }
+        if (heldType == EList::xp) { int    d = scaleToY_NEG(event.GetPosition().y, heldType); heldPoint->camEntry->x     = d; }
+        if (heldType == EList::yp) { int    d = scaleToY_NEG(event.GetPosition().y, heldType); heldPoint->camEntry->y     = d; }
+        if (heldType == EList::rp) { int    d = scaleToY_NEG(event.GetPosition().y, heldType); heldPoint->camEntry->r     = d; }
 
-        heldPoint->camEntry->scale = d;
         paintNow();
     }
     
@@ -176,12 +179,8 @@ double TlSlider::scaleToY_NEG(int i, int j) {
     return i-mids[j] ;
 }
 void stupidvsoutput(int i) {
-   
-
     char num_char[10 + sizeof(char)];
-
     std::sprintf(num_char, "%d", i);
-
     OutputDebugStringA(num_char);
     OutputDebugStringA("\n");
 }
@@ -190,18 +189,22 @@ frame* TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
     while (head->next != NULL) {
         /* pointbrush */
         if (head->camEntry != NULL) {
-            if (
-                 (cp.x - i * p_dist)
-                *(cp.x - i * p_dist) +
-                 (cp.y - scaleToY(head->camEntry->scale,2))
-                *(cp.y - scaleToY(head->camEntry->scale,2))
-         
-                < (p_diam*p_diam)) {
 
-                stupidvsoutput(i);
+            for (int j = 0; j < point_types; j++) {
+                if (
+                    (cp.x - i * p_dist)
+                * (cp.x - i * p_dist) +
+                (cp.y - scaleToY(head->camEntry->scale, j))
+                * (cp.y - scaleToY(head->camEntry->scale, j))
 
-                return head;
+                < (p_diam * p_diam)) {
+
+                    heldType = j;
+                    return head;
+                }
+
             }
+
             
             //dc.DrawCircle(wxPoint(i * p_dist, midY + (1 - head->camEntry->scale) * 100 - 50), p_diam);
 
