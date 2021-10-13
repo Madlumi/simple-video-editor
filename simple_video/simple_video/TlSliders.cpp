@@ -51,7 +51,7 @@ END_EVENT_TABLE()
 void TlSlider::mouseMoved(wxMouseEvent& event) {
     wp = event.GetPosition();
     if(heldPoint!=NULL){
-    
+        heldPoint->camEntry->scale = scaleToY_NEG(event.GetPosition().y);
     }
     paintNow();
 }
@@ -59,8 +59,10 @@ void TlSlider::mouseDown(wxMouseEvent& event) {
     getClickPoint(points, event.GetPosition());
 }
 void TlSlider::mouseReleased(wxMouseEvent& event) {
+    heldPoint = NULL;
 }
 void TlSlider::paintEvent(wxPaintEvent& evt) {
+
     wxPaintDC dc(this);
     render(dc);
 }
@@ -124,7 +126,7 @@ int TlSlider::scaleToY(double s) {
 double TlSlider::scaleToY_NEG(int i) {
    
 
-    return (midY - 50 - i) / 100 + 1;
+    return (double(midY - 50 - i)/100)+1;
     //return midY + (1 - s) * 100 - 50;
 }
 void TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
@@ -150,6 +152,7 @@ void TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
 }
 
 void TlSlider::render(wxDC& dc) {
+    //dc.Clear();
     //int s = (int)(scaleToY_NEG(scaleToY(1))*100);
 
     //char num_char[10 + sizeof(char)];
