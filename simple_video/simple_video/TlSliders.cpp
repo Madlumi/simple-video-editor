@@ -65,7 +65,7 @@ void TlSlider::mouseDown(wxMouseEvent& event) {
     frame *f=getClickPoint(points, event.GetPosition());
     if (f != NULL) {
         heldPoint = f;
-        heldPoint->camEntry->type = brush;
+        heldPoint->camEntry->type[heldType] = brush;
     }
 }
 void TlSlider::mouseReleased(wxMouseEvent& event) {
@@ -118,17 +118,17 @@ void TlSlider::drawPoint(wxDC& dc, struct frame* head,int i, int j) {
     }
 
     int d = p_diam;
-    if (head->camEntry->type == EList::derived) {
+    if (head->camEntry->type[j] == EList::derived) {
         dc.SetBrush(wxBrush(wxColor(100, 100, 100), wxBRUSHSTYLE_SOLID));
         dc.SetPen(wxPen(col[j], 2));
         d--;
-    } else if (head->camEntry->type == EList::hard) {
+    } else if (head->camEntry->type[j] == EList::hard) {
         dc.SetBrush(wxBrush(wxColor(200, 200, 25), wxBRUSHSTYLE_SOLID));
         dc.SetPen(wxPen(col[j], 2));
-    } else if (head->camEntry->type == EList::linear) {
+    } else if (head->camEntry->type[j] == EList::linear) {
         dc.SetBrush(wxBrush(wxColor(25, 200, 25), wxBRUSHSTYLE_SOLID));
         dc.SetPen(wxPen(col[j], 2));
-    } else if (head->camEntry->type == EList::smooth) {
+    } else if (head->camEntry->type[j] == EList::smooth) {
         dc.SetBrush(wxBrush(wxColor(25, 50, 200), wxBRUSHSTYLE_SOLID));
         dc.SetPen(wxPen(col[j], 2));
     }

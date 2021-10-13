@@ -51,7 +51,11 @@ camEntry* camEntry_create(int frame, double x, double y, double scale, double r,
 	e->y = y;
 	e->scale = scale;
 	e->r = r;
-	e->type = type;
+	//wow so lazy
+	e->type[0] = type;
+	e->type[1] = type;
+	e->type[2] = type;
+	e->type[3] = type;
 	return e;
 }
 

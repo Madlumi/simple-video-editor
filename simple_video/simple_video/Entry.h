@@ -19,7 +19,7 @@ struct camEntry {
     double y;
     double scale;
     double r;
-    int type;
+    int type[4];
     void update(entry* e);
 };
 
