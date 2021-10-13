@@ -110,6 +110,11 @@ void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
     while (head->next != NULL) {
         /* pointbrush */
         if (head->camEntry != NULL) {
+            if (head->next->camEntry != NULL) {
+                dc.SetPen(wxPen(wxColor(0, 0, 0), 3));
+                dc.DrawLine(i * p_dist, scaleToY(head->camEntry->scale), (i+1) * p_dist, scaleToY(head->next->camEntry->scale));
+            }
+
             int d =  p_diam;
             if (head->camEntry->type == EList::derived) {
                 dc.SetBrush(wxBrush(wxColor(100, 100, 100), wxBRUSHSTYLE_SOLID));
@@ -129,7 +134,6 @@ void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
             }
 
             dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->scale) ), d);
-
         }
 
         i += 1;
@@ -212,7 +216,7 @@ void TlSlider::render(wxDC& dc) {
     if (points != NULL) { drawPoints(dc, points); };
     
     // draw some text
-    dc.DrawText(wxT("Testing"), 40, 60);
+    //dc.DrawText(wxT("Testing"), 40, 60);
 
     // draw a circle
     //dc.SetBrush(*wxGREEN_BRUSH); // green filling
@@ -223,8 +227,8 @@ void TlSlider::render(wxDC& dc) {
 
 
     // draw a line
-    dc.SetPen(wxPen(wxColor(0, 0, 0), 3)); // black line, 3 pixels thick
-    dc.DrawLine(300, 100, 700, 300); // draw line across the rectangle
+    //dc.SetPen(wxPen(wxColor(0, 0, 0), 3)); // black line, 3 pixels thick
+    //dc.DrawLine(300, 100, 700, 300); // draw line across the rectangle
 
     // Look at the wxDC docs to learn how to draw other stuff
 }
