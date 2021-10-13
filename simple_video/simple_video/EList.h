@@ -20,6 +20,12 @@ class EList {
 			linear = 2,
 			smooth = 3,
 		};
+		enum pointtypes {
+			xp = 0,
+			yp = 1,
+			sp = 2,
+			rp = 3,
+		};
 		
 
 };

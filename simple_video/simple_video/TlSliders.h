@@ -13,17 +13,10 @@ public:
     int brush = EList::linear;
     TIMELINE points=NULL;
     frame* heldPoint = NULL;
-    bool show_x=false;
-    bool show_y= true;
-    bool show_s=true;
-
-    int midX = 200;
-    int midY = 200;
-    int midS = 300;
-    
-    wxColor col_x= wxColor(255,0,0);
-    wxColor col_y = wxColor(0, 255, 0);
-    wxColor col_s = wxColor(0, 0, 255);
+    int point_types = 4;
+    bool show_point[4] = { true,true,true,true };
+    int mids[4] = { 200,300,300,400 };
+    wxColor col[4] = { wxColor(255,0,0),wxColor(0, 255, 0),wxColor(0, 0, 255),wxColor(175, 0, 175) };
 
     TlSlider(wxPanel* parent);
     wxPoint wp = wxPoint(0,0);
@@ -38,10 +31,11 @@ public:
     void initTl(TIMELINE t);
 
     void paintNow();
-    void drawPoint(wxDC& dc, frame* head, int i, int mid, wxColor c);
+    void drawPoint(wxDC& dc, frame* head, int i, int j);
     void drawPoints(wxDC& dc, struct frame* head);
-    int scaleToY(double s);
-    double scaleToY_NEG(int i);
+
+    int scaleToY(double s, int j);
+    double scaleToY_NEG(int i, int j);
     frame* getClickPoint(frame* head, wxPoint cp);
     void render(wxDC& dc);
 

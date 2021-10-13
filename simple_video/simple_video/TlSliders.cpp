@@ -51,7 +51,7 @@ END_EVENT_TABLE()
 void TlSlider::mouseMoved(wxMouseEvent& event) {
     wp = event.GetPosition();
     if(heldPoint!=NULL){
-        double d = scaleToY_NEG(event.GetPosition().y);
+        double d = scaleToY_NEG(event.GetPosition().y,2);
 
         heldPoint->camEntry->scale = d;
         paintNow();
@@ -104,29 +104,36 @@ void TlSlider::paintNow() {
  * (e.g. wxPaintDC or wxClientDC) is used.
  */
 
-void TlSlider::drawPoint(wxDC& dc, struct frame* head,int i, int mid, wxColor c) {
+void TlSlider::drawPoint(wxDC& dc, struct frame* head,int i, int j) {
     if (head->next->camEntry != NULL) {
-        dc.SetPen(wxPen(c, 3));
-        dc.DrawLine(i * p_dist, scaleToY(head->camEntry->scale), (i + 1) * p_dist, scaleToY(head->next->camEntry->scale));
+        dc.SetPen(wxPen(col[j], 3));
+        
+        if (j == EList::sp)dc.DrawLine(i * p_dist, scaleToY(head->camEntry->scale,j), (i + 1) * p_dist, scaleToY(head->next->camEntry->scale,j));
+        if (j == EList::xp)dc.DrawLine(i * p_dist, scaleToY(head->camEntry->x, j), (i + 1) * p_dist, scaleToY(head->next->camEntry->x, j));
+        if (j == EList::yp)dc.DrawLine(i * p_dist, scaleToY(head->camEntry->y, j), (i + 1) * p_dist, scaleToY(head->next->camEntry->y, j));
+        if (j == EList::rp)dc.DrawLine(i * p_dist, scaleToY(head->camEntry->r, j), (i + 1) * p_dist, scaleToY(head->next->camEntry->r, j));
     }
 
     int d = p_diam;
     if (head->camEntry->type == EList::derived) {
         dc.SetBrush(wxBrush(wxColor(100, 100, 100), wxBRUSHSTYLE_SOLID));
-        dc.SetPen(wxPen(c, 2));
+        dc.SetPen(wxPen(col[j], 2));
         d--;
     } else if (head->camEntry->type == EList::hard) {
         dc.SetBrush(wxBrush(wxColor(200, 200, 25), wxBRUSHSTYLE_SOLID));
-        dc.SetPen(wxPen(c, 2));
+        dc.SetPen(wxPen(col[j], 2));
     } else if (head->camEntry->type == EList::linear) {
         dc.SetBrush(wxBrush(wxColor(25, 200, 25), wxBRUSHSTYLE_SOLID));
-        dc.SetPen(wxPen(c, 2));
+        dc.SetPen(wxPen(col[j], 2));
     } else if (head->camEntry->type == EList::smooth) {
         dc.SetBrush(wxBrush(wxColor(25, 50, 200), wxBRUSHSTYLE_SOLID));
-        dc.SetPen(wxPen(c, 2));
+        dc.SetPen(wxPen(col[j], 2));
     }
 
-    dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->scale)), d);
+    if (j == EList::sp) { dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->scale, j)), d); }
+    if (j == EList::xp) { dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->x, j)), d); }
+    if (j == EList::yp) { dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->y, j)), d); }
+    if (j == EList::rp) { dc.DrawCircle(wxPoint(i * p_dist, scaleToY(head->camEntry->r, j)), d); }
 
 }
 void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
@@ -135,10 +142,16 @@ void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
     while (head->next != NULL) {
         if (head->camEntry != NULL) {
 
-            if (show_x)drawPoint(dc, head,i, midX, col_x);
-            if (show_y)drawPoint(dc, head, i, midY, col_y);
+            for (int j = 0; j < point_types;j++) {
+                dc.SetPen(wxPen(col[j], 1, wxPENSTYLE_DOT));
+                if(j == EList::sp) { 
+                    dc.DrawLine(0, scaleToY(1,j), dc.GetSize().GetWidth(), scaleToY(1, j)); 
+                } else { 
+                    dc.DrawLine(0, mids[j], dc.GetSize().GetWidth(), mids[j]); 
+                }
+                if (show_point[j])drawPoint(dc, head, i, j);
+            }
 
-            if (show_s)drawPoint(dc, head, i, midS, col_s);
         }
 
         i += 1;
@@ -149,17 +162,18 @@ void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
 }
 
 
-int TlSlider::scaleToY(double s) {
-    return midY + (1 - s) * 100 - 50;
+int TlSlider::scaleToY(double s, int j) {
+    if (j == EList::sp){return mids[j] + (1 - s) * 100 - 50;}
+    return mids[j] + s;
 }
 
 // i = midY + (1 - s) * 100 - 50;
 // s=(midY - 50-i)/100+1
-double TlSlider::scaleToY_NEG(int i) {
+double TlSlider::scaleToY_NEG(int i, int j) {
    
 
-    return (double(midY - 50 - i)/100)+1;
-    //return midY + (1 - s) * 100 - 50;
+    if (j == EList::sp) { return (double(mids[j] - 50 - i) / 100) + 1; }
+    return i-mids[j] ;
 }
 void stupidvsoutput(int i) {
    
@@ -179,8 +193,8 @@ frame* TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
             if (
                  (cp.x - i * p_dist)
                 *(cp.x - i * p_dist) +
-                 (cp.y - scaleToY(head->camEntry->scale))
-                *(cp.y - scaleToY(head->camEntry->scale))
+                 (cp.y - scaleToY(head->camEntry->scale,2))
+                *(cp.y - scaleToY(head->camEntry->scale,2))
          
                 < (p_diam*p_diam)) {
 
