@@ -39,8 +39,16 @@ public:
 
     wxComboBox* interpTypeBox = nullptr;
     void ZoomDisplay(double s);
-
+    void initControlls(wxPanel* parent);
     void onTlScroll(wxScrollWinEvent& event);
+
+    void ShowX(wxCommandEvent& evt);
+
+    void ShowY(wxCommandEvent& evt);
+
+    void ShowS(wxCommandEvent& evt);
+
+    void ShowR(wxCommandEvent& evt);
 
     void OnbtnClck(wxCommandEvent &evt);
     

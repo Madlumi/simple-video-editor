@@ -19,7 +19,15 @@ EVT_BUTTON(EList::zoomout, Zoomout)
 EVT_SCROLLWIN(onTlScroll)
 
 EVT_TIMER(EList::Timer, TimNextF)
+
+EVT_TOGGLEBUTTON(EList::showx, ShowX)
+EVT_TOGGLEBUTTON(EList::showy, ShowY)
+EVT_TOGGLEBUTTON(EList::shows, ShowS)
+EVT_TOGGLEBUTTON(EList::showr, ShowR)
+
+
 wxEND_EVENT_TABLE()
+
 
 
 cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)) {
@@ -31,6 +39,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	this->SetMinSize(wxSize(500,400));
 	menuBar = initmenu();
 	this->SetMenuBar(menuBar);
+	
 	wxInitAllImageHandlers();
 
 
@@ -53,7 +62,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	
 	
 	playPanel->SetBackgroundColour(wxColor(25, 25, 25));
-	
+	initControlls(playPanel);
 
 	
 
@@ -81,17 +90,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	
 	//varius definers--------------------------------
 	tim = new wxTimer(this, EList::Timer);
-	nextf = new wxButton(playPanel, EList::Nextf, "->");
-	play = new wxButton(playPanel, EList::play, ">");
-	prevf = new wxButton(playPanel, EList::prevf, "<-");
-
-	zoomin = new wxButton(playPanel, EList::zoomin, "+");
-	zoomout = new wxButton(playPanel, EList::zoomout, "-");
-
-	showx = new wxToggleButton(playPanel, EList::showx, "X");
-	showy = new wxToggleButton(playPanel, EList::showy, "Y");
-	shows = new wxToggleButton(playPanel, EList::shows, "S");
-	showr = new wxToggleButton(playPanel, EList::showr, "R");
+	
 	const wxString choices[4] = { wxT("None"),wxT("Hard"),wxT("Linear"),wxT("Smooth") };
 	interpTypeBox = new wxComboBox(playPanel, EList::interpTypeBox, "Linear", wxDefaultPosition, wxDefaultSize, 4,
 								   choices, wxCB_READONLY,
@@ -195,6 +194,28 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 }
 
 cMain::~cMain() {}
+
+void cMain::initControlls(wxPanel* parent) {
+	nextf = new wxButton(parent, EList::Nextf, "->");
+	play = new wxButton(parent, EList::play, ">");
+	prevf = new wxButton(parent, EList::prevf, "<-");
+
+	zoomin = new wxButton(parent, EList::zoomin, "+");
+	zoomout = new wxButton(parent, EList::zoomout, "-");
+
+	showx = new wxToggleButton(parent, EList::showx, "X");
+	showy = new wxToggleButton(parent, EList::showy, "Y");
+	shows = new wxToggleButton(parent, EList::shows, "S");
+	showr = new wxToggleButton(parent, EList::showr, "R");
+
+	showx->SetValue(1);
+	showy->SetValue(1);
+	shows->SetValue(1);
+	showr->SetValue(1);
+
+}
+
+
 void cMain::ZoomDisplay(double s) {
 	int x; int y;
 	DisplayScroller->GetVirtualSize(&x,&y);
@@ -210,7 +231,23 @@ void cMain::onTlScroll(wxScrollWinEvent& event) {
 	event.Skip();
 }
 
+void cMain::ShowX(wxCommandEvent& evt) {
+	PointDrawPanle->show_point[EList::xp]= evt.IsChecked();
+	PointDrawPanle->paintNow();
+}
+void cMain::ShowY(wxCommandEvent& evt) {
+	PointDrawPanle->show_point[EList::yp] = evt.IsChecked();
+	PointDrawPanle->paintNow();
+}
+void cMain::ShowS(wxCommandEvent& evt) {
+	PointDrawPanle->show_point[EList::sp] = evt.IsChecked();
+	PointDrawPanle->paintNow();
+}
+void cMain::ShowR(wxCommandEvent& evt) {
+	PointDrawPanle->show_point[EList::rp] = evt.IsChecked();
+	PointDrawPanle->paintNow();
 
+}
 
 void cMain::OnbtnClck(wxCommandEvent& evt) {
 	//lst->AppendString(txt->GetValue());
