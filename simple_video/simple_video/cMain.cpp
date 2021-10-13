@@ -41,10 +41,10 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	
 
 	playPanel = new wxPanel(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
-	//tlPanel = new wxPanel(TimelineScroller, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
+	
 	
 	playPanel->SetBackgroundColour(wxColor(25, 25, 25));
-	//tlPanel->SetBackgroundColour(wxColor(25, 200, 50));
+	
 
 	
 
@@ -52,12 +52,17 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	
 	DisplayScroller = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(600, 600), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
 	
-	TimelineScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(0, 0), wxSize(100, 100), wxHSCROLL , wxT("scrolledWindow"));
-	TimelinePointScroller = new wxScrolledWindow(TimelineScroller, wxID_ANY, wxPoint(0, 0), wxSize(100, 100), wxHSCROLL, wxT("scrolledWindow"));
+	TimelineScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(0, 0), wxSize(100, 21), wxHSCROLL, wxT("scrolledWindow"));
+	TimelinePointScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(0, 0), wxSize(1920, 120), wxVSCROLL, wxT("scrolledWindow"));
 	
 	DisplayScroller->SetBackgroundColour(wxColor(200, 200, 200));
-	TimelineScroller->SetBackgroundColour(wxColor(5, 2, 5));
+	TimelineScroller->SetBackgroundColour(wxColor(130, 130, 130));
 	TimelinePointScroller->SetBackgroundColour(wxColor(25, 25, 25));
+
+
+
+	//tlPanel = new wxPanel(TimelineScroller, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
+	//tlPanel->SetBackgroundColour(wxColor(25, 200, 50));
 
 	frame2 = new wxPanel(DisplayScroller, wxID_ANY, wxPoint(0, 0), wxSize(1920, 1080));
 	//varius definers--------------------------------
@@ -97,8 +102,8 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	
 	DisplayScroller->SetVirtualSize(wxSize(1920, 1080));
 	DisplayScroller->SetScrollRate(4, 4);
-	
-	TimelineScroller->SetVirtualSize(wxSize(1920, 300));
+	TimelineScroller->ShowScrollbars(wxSHOW_SB_NEVER, wxSHOW_SB_NEVER);
+	TimelineScroller->SetVirtualSize(wxSize(1920, 20));
 	TimelineScroller->SetScrollRate(4, 4);
 	TimelinePointScroller->SetVirtualSize(wxSize(1920, 1080));
 	TimelinePointScroller->SetScrollRate(4, 4);
@@ -122,8 +127,8 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 
 
 	botPanel->GetSizer()->Add(playPanel, 0, wxEXPAND);
-	botPanel->GetSizer()->Add(TimelineScroller, 1, wxEXPAND);
-
+	botPanel->GetSizer()->Add(TimelineScroller, 0, wxEXPAND);
+	botPanel->GetSizer()->Add(TimelinePointScroller, 1, wxEXPAND);
 	//TimelineScroller->GetSizer()->Add(tlPanel, 0, wxEXPAND);
 	frame->GetSizer()->Add(DisplayScroller, 1, wxEXPAND);
 
@@ -201,7 +206,7 @@ void cMain::MenuImport(wxCommandEvent& evt) {
 
 
 	
-	assets->addFolder(dirDial.GetPath().ToStdString(),tlPanel, frame2);
+	assets->addFolder(dirDial.GetPath().ToStdString(), TimelineScroller, frame2);
 	this->Layout();
 	
 

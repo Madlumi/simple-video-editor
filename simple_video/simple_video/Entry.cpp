@@ -23,11 +23,11 @@ struct entry* entry_create(const char* str, wxWindow* tl, wxPanel* imgframe, int
 	// Select the bitmap out of the DC 
 	dc.SelectObject(wxNullBitmap); 
 
-	e->btn = new wxButton(tl, wxID_ANY,"",wxPoint(btnSize *i, 15), wxSize(btnSize, btnH), wxBORDER_NONE);
+	e->btn = new wxButton(tl, wxID_ANY,"",wxPoint(btnSize *i, 0), wxSize(btnSize, btnH), wxBORDER_NONE);
 	e->btn->SetBitmap(bitmap);
 	e->btn->SetBitmapMargins(-4,0);
 	e->btn->SetBitmapPosition(wxLEFT);
-	tl->GetSizer()->Add(e->btn, 1, wxEXPAND);
+	//tl->GetSizer()->Add(e->btn, 1, wxEXPAND);
 	//wxString path = wxGetCwd() + wxT("/pot.png");
 	wxString path = wxString::FromUTF8(str);
 	OutputDebugString(L"" + (path)+"\n");
