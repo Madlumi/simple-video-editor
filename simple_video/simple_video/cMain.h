@@ -41,6 +41,7 @@ public:
     void ZoomDisplay(double s);
     void initControlls(wxPanel* parent);
     void onTlScroll(wxScrollWinEvent& event);
+    void SetInter(wxCommandEvent& evt);
     void initPanels();
     void ShowX(wxCommandEvent& evt);
 

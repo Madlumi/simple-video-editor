@@ -24,27 +24,12 @@ EVT_TOGGLEBUTTON(EList::showx, ShowX)
 EVT_TOGGLEBUTTON(EList::showy, ShowY)
 EVT_TOGGLEBUTTON(EList::shows, ShowS)
 EVT_TOGGLEBUTTON(EList::showr, ShowR)
-
+EVT_COMBOBOX(EList::interpTypeBox, SetInter)
 
 wxEND_EVENT_TABLE()
 
 
-void cMain::initPanels() {
-	
-	botPanel->SetBackgroundColour(wxColor(25, 0, 100));
-	playPanel = new wxPanel(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
-	playPanel->SetBackgroundColour(wxColor(25, 25, 25));
-	
-	DisplayScroller = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(600, 600), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
-	TimelineScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(0, 0), wxSize(100, 21), wxHSCROLL, wxT("scrolledWindow"));
-	TimelinePointScroller = new wxScrolledWindow(botPanel, EList::TlpScroll, wxPoint(0, 0), wxSize(20, 20), wxVSCROLL, wxT("scrolledWindow"));
-	DisplayScroller->SetBackgroundColour(wxColor(200, 200, 200));
-	TimelineScroller->SetBackgroundColour(wxColor(130, 130, 130));
-	TimelinePointScroller->SetBackgroundColour(wxColor(25, 25, 25));
-	frame2 = new wxPanel(DisplayScroller, wxID_ANY, wxPoint(0, 0), wxSize(1920, 1080));
-	tlpframe = new wxPanel(TimelinePointScroller, wxID_ANY, wxPoint(0, 0), wxSize(500, 500));
-	tlpframe->SetBackgroundColour(wxColor(250, 250, 250));
-}
+
 cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)) {
 	SetFont(wxFont(
 		20, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL,
@@ -155,24 +140,28 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	tlpframe->SetSizer(tlpSizer);
 	tlpSizer->Add(PointDrawPanle, 1, wxEXPAND);
 
-	//splitter->SetSashPosition(128 * 3);
-	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
-	//panel2 = new wxPanel(this, wxID_ANY, wxPoint(550, 50), wxSize(300, 300));
-	// then simply create like this
-	//path = wxGetCwd() + wxT("/pot.png");
-	//drawPane2 = new wxImagePanel(panel2, path, wxBITMAP_TYPE_PNG);
-	//sizer2->Add(drawPane2, 1, wxEXPAND);
-	//panel2->SetSizer(sizer2);
-	//frame->Show();
-
-	//btn = new wxButton(this, 10000, ":)",wxPoint(30, 15), wxSize(75, 50));
-	//txt = new wxTextCtrl(this, wxID_ANY, "", wxPoint(15, 90), wxSize(150, 50));
-	//lst = new wxListBox(this, wxID_ANY, wxPoint(250, 15), wxSize(500, 200));
 
 
 }
 
 cMain::~cMain() {}
+
+void cMain::initPanels() {
+
+	botPanel->SetBackgroundColour(wxColor(25, 0, 100));
+	playPanel = new wxPanel(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
+	playPanel->SetBackgroundColour(wxColor(25, 25, 25));
+
+	DisplayScroller = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(600, 600), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
+	TimelineScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(0, 0), wxSize(100, 21), wxHSCROLL, wxT("scrolledWindow"));
+	TimelinePointScroller = new wxScrolledWindow(botPanel, EList::TlpScroll, wxPoint(0, 0), wxSize(20, 20), wxVSCROLL, wxT("scrolledWindow"));
+	DisplayScroller->SetBackgroundColour(wxColor(200, 200, 200));
+	TimelineScroller->SetBackgroundColour(wxColor(130, 130, 130));
+	TimelinePointScroller->SetBackgroundColour(wxColor(25, 25, 25));
+	frame2 = new wxPanel(DisplayScroller, wxID_ANY, wxPoint(0, 0), wxSize(1920, 1080));
+	tlpframe = new wxPanel(TimelinePointScroller, wxID_ANY, wxPoint(0, 0), wxSize(500, 500));
+	tlpframe->SetBackgroundColour(wxColor(250, 250, 250));
+}
 
 void cMain::initControlls(wxPanel* parent) {
 	nextf = new wxButton(parent, EList::Nextf, "->");
@@ -211,6 +200,10 @@ void cMain::onTlScroll(wxScrollWinEvent& event) {
 	OutputDebugStringA("scrolllllllllllllllllllllllllllllllllllllllllllllllllll");
 	TimelineScroller->Scroll(10,0);
 	event.Skip();
+}
+void cMain::SetInter(wxCommandEvent& evt) {
+
+	PointDrawPanle->brush=evt.GetInt();
 }
 
 void cMain::ShowX(wxCommandEvent& evt) {
