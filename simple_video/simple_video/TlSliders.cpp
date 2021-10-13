@@ -56,7 +56,7 @@ void TlSlider::mouseMoved(wxMouseEvent& event) {
         if (heldType == EList::xp) { int    d = scaleToY_NEG(event.GetPosition().y, heldType); heldPoint->camEntry->x     = d; }
         if (heldType == EList::yp) { int    d = scaleToY_NEG(event.GetPosition().y, heldType); heldPoint->camEntry->y     = d; }
         if (heldType == EList::rp) { int    d = scaleToY_NEG(event.GetPosition().y, heldType); heldPoint->camEntry->r     = d; }
-
+        interpCam(points);
         paintNow();
     }
     
@@ -253,4 +253,70 @@ void TlSlider::render(wxDC& dc) {
     //dc.DrawLine(300, 100, 700, 300); // draw line across the rectangle
 
     // Look at the wxDC docs to learn how to draw other stuff
+}
+void interpCam(struct frame* head) {
+    int i = 0;
+
+    for (int j = 0; j < 4; j++) {
+        struct frame* nav = head;
+        while (nav->next != NULL) {
+            if (nav->camEntry != NULL) {
+                if (nav->camEntry->type[j] != EList::derived) {
+                    int len = untilNextPoint(nav, j);
+                    interpCamSpan(nav, len, j);
+                }
+            }
+            nav = nav->next;
+        }
+    }
+}
+void interpCamSpan(struct frame* head, int len, int j) {
+    double start;
+    double end;
+    struct frame* nav = head;
+    int type = nav->camEntry->type[j];
+    if (j == EList::sp) { start = nav->camEntry->scale; 
+    } else if (j == EList::xp) { start = nav->camEntry->x; 
+    } else if (j == EList::yp) { start = nav->camEntry->y; 
+    } else if (j == EList::rp) { start = nav->camEntry->r; }
+
+    for (int i = 0; i < len; i++) { nav = nav->next; }
+    if (j == EList::sp) { end = nav->camEntry->scale; 
+    } else if (j == EList::xp) { end = nav->camEntry->x; 
+    } else if (j == EList::yp) { end = nav->camEntry->y; 
+    } else if (j == EList::rp) { end = nav->camEntry->r; }
+
+    nav = head;
+    for (int i = 0; i < len; i++) {
+
+        double val = calcInter(start, end, len, i, type);
+
+        if (j == EList::sp) { nav->camEntry->scale = val; 
+        } else if (j == EList::xp) { nav->camEntry->x = val; 
+        } else if (j == EList::yp) { nav->camEntry->y = val; 
+        } else if (j == EList::rp) { nav->camEntry->r = val; }
+        nav = nav->next;
+    }
+
+}
+double calcInter(double start, double end, int len, int curr, int type) {
+    if (type == EList::hard) {
+        return start;
+    } else if (type == EList::linear) {
+        return start + (end - start / len) * curr;
+    } else if (type == EList::derived) {
+        /*unimplemented*/
+        return start;
+    }
+
+}
+
+int untilNextPoint(struct frame* head, int j) {
+    int i = 0;
+    while (head->next != NULL) {
+        i += head->entry->hold;
+        head = head->next;
+        if (head->camEntry->type[j] != EList::derived) { return i; }
+    }
+    return i;
 }

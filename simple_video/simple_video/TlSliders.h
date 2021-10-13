@@ -4,6 +4,11 @@
 #include "EList.h"
 #include "Entry.h"
 #include <wx/dcbuffer.h>
+
+void interpCam(struct frame* head);
+void interpCamSpan(struct frame* head, int len, int j);
+double calcInter(double start, double end, int len, int curr, int type);
+int untilNextPoint(struct frame* head, int j);
 class TlSlider : public wxPanel {
 
 public:
