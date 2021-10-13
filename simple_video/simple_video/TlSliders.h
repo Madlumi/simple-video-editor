@@ -1,14 +1,23 @@
 #pragma once
 #include <wx/wx.h>
+#include "assetMng.h"
+#include "EList.h"
+#include "Entry.h"
 class TlSlider : public wxPanel {
 
 public:
+    TIMELINE points=NULL;
+    
     TlSlider(wxPanel* parent);
     wxPoint wp = wxPoint(0,0);
     void mouseMoved(wxMouseEvent& event);
 
     void paintEvent(wxPaintEvent& evt);
+
+    void initTl(TIMELINE t);
+
     void paintNow();
+    void drawPoints(wxDC& dc, struct frame* head);
     void render(wxDC& dc);
 
     // some useful events

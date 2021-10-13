@@ -56,6 +56,12 @@ void TlSlider::paintEvent(wxPaintEvent& evt) {
     render(dc);
 }
 
+void TlSlider::initTl(TIMELINE t) {
+    points = t;
+    this->GetParent()->Layout();
+
+}
+
 /*
  * Alternatively, you can use a clientDC to paint on the panel
  * at any time. Using this generally does not free you from
@@ -78,7 +84,28 @@ void TlSlider::paintNow() {
  * method so that it can work no matter what type of DC
  * (e.g. wxPaintDC or wxClientDC) is used.
  */
+
+void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
+    int i = 0;
+    int p_dist = 15;
+    int p_diam = 5;
+    while (head->next != NULL) {
+        /* pointbrush */
+        dc.SetBrush(*wxGREEN_BRUSH); // green filling
+        dc.SetPen(wxPen(wxColor(255, 0, 0), 5)); // 5-pixels-thick red outline
+
+        dc.DrawCircle(wxPoint(i*p_dist,100), p_diam /* radius */);
+
+        i += 1;
+        head = head->next;
+
+
+    }
+}
+
 void TlSlider::render(wxDC& dc) {
+
+    if (points != NULL) { drawPoints(dc, points); };
     OutputDebugStringA("123sdfgsdfgvsdfgdfsfds");
     // draw some text
     dc.DrawText(wxT("Testing"), 40, 60);

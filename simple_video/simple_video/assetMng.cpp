@@ -1,8 +1,9 @@
 #include "assetMng.h"
+#include "EList.h"
 #include "Entry.h"
 #include < windows.h >
 #include <wx/progdlg.h>
-#include "EList.h"
+
 assetMng::assetMng() {
 }
 

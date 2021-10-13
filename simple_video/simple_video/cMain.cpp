@@ -189,9 +189,7 @@ void cMain::OnbtnClck(wxCommandEvent& evt) {
 }
 
 void cMain::BtnNextF(wxCommandEvent& evt) {
-	PointDrawPanle->paintNow();
-	PointDrawPanle->Layout();
-	tlpframe->Layout();
+	
 	assets->nextFrame();
 }
 
@@ -228,7 +226,10 @@ void cMain::MenuImport(wxCommandEvent& evt) {
 
 
 	
+
+
 	assets->addFolder(dirDial.GetPath().ToStdString(), TimelineScroller, frame2);
+	PointDrawPanle->initTl(assets->tl);
 	this->Layout();
 	
 
