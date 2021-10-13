@@ -13,6 +13,14 @@ class EList {
 			play = 10009,
 			Timer = 10010,
 			TlpScroll = 10011,
+
+			zoomin = 10012,
+			zoomout = 10013,
+			showx = 10014,
+			showy = 10015,
+			shows = 10016,
+			showr = 10017,
+			interpTypeBox= 10018
 		};
 		enum cam {
 			derived = 0,

@@ -11,7 +11,8 @@
 #include <wx/scrolwin.h>
 #include "TlSliders.h"
 #include "assetMng.h"
-
+#include <wx/combobox.h>
+#include <wx/tglbtn.h>
 class cMain :public wxFrame {
 
 public:
@@ -28,6 +29,15 @@ public:
     wxButton* play = nullptr;
     wxTimer* tim = nullptr;
     
+
+    wxButton* zoomin = nullptr;
+    wxButton* zoomout = nullptr;
+    wxToggleButton* showx = nullptr;
+    wxToggleButton* showy = nullptr;
+    wxToggleButton* shows = nullptr;
+    wxToggleButton* showr = nullptr;
+
+    wxComboBox* interpTypeBox = nullptr;
     void ZoomDisplay(double s);
 
     void onTlScroll(wxScrollWinEvent& event);

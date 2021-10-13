@@ -303,7 +303,7 @@ double calcInter(double start, double end, int len, int curr, int type) {
     if (type == EList::hard) {
         return start;
     } else if (type == EList::linear) {
-        return start + (end - start / len) * curr;
+        return start + ((end - start) / len) * curr;
     } else if (type == EList::derived) {
         /*unimplemented*/
         return start;

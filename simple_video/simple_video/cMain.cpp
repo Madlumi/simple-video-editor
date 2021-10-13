@@ -20,6 +20,10 @@ wxEND_EVENT_TABLE()
 
 
 cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)) {
+	SetFont(wxFont(
+		20, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL,
+						wxFONTWEIGHT_BOLD, true));
+
 	assets = new assetMng();
 	this->SetMinSize(wxSize(500,400));
 	menuBar = initmenu();
@@ -74,9 +78,21 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	
 	//varius definers--------------------------------
 	tim = new wxTimer(this, EList::Timer);
-	nextf = new wxButton(playPanel, EList::Nextf, ">");
-	play = new wxButton(playPanel, EList::play, ">>");
-	prevf = new wxButton(playPanel, EList::prevf, "<");
+	nextf = new wxButton(playPanel, EList::Nextf, "->");
+	play = new wxButton(playPanel, EList::play, ">");
+	prevf = new wxButton(playPanel, EList::prevf, "<-");
+
+	zoomin = new wxButton(playPanel, EList::zoomin, "+");
+	zoomout = new wxButton(playPanel, EList::zoomout, "-");
+
+	showx = new wxToggleButton(playPanel, EList::showx, "X");
+	showy = new wxToggleButton(playPanel, EList::showy, "Y");
+	shows = new wxToggleButton(playPanel, EList::shows, "S");
+	showr = new wxToggleButton(playPanel, EList::showr, "R");
+	const wxString choices[4] = { wxT("None"),wxT("Hard"),wxT("Linear"),wxT("Smooth") };
+	interpTypeBox = new wxComboBox(playPanel, EList::interpTypeBox, "Linear", wxDefaultPosition, wxDefaultSize, 4,
+								   choices, wxCB_READONLY,
+								   wxDefaultValidator, wxT("InterTypeBox"));
 	//nextf->Bind(wxEVT_BUTTON, &cMain::BtnNextF, this);
 	//nextf->Bind(wxEVT_BUTTON, &Entry::clicked, this, -1, e->img);
 	
@@ -132,7 +148,7 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	//splitterV->SetSashPosition( 100);
 	//sizer addition balongas-----------------------------------------
 	//frame->GetSizer()->Add(drawPane, 1, wxEXPAND);
-
+	
 
 	botPanel->GetSizer()->Add(playPanel, 0, wxEXPAND);
 	botPanel->GetSizer()->Add(TimelineScroller, 0, wxEXPAND);
@@ -141,8 +157,19 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 	frame->GetSizer()->Add(DisplayScroller, 1, wxEXPAND);
 
 	playPanel->GetSizer()->Add(prevf, 0, wxEXPAND);
-	playPanel->GetSizer()->Add(play, 0, wxEXPAND);
+	playPanel->GetSizer()->Add(play, 10, wxEXPAND);
 	playPanel->GetSizer()->Add(nextf, 0, wxEXPAND);
+	playPanel->GetSizer()->AddStretchSpacer(10);
+	playPanel->GetSizer()->Add(zoomin, 0, wxEXPAND);
+	playPanel->GetSizer()->Add(zoomout, 0, wxEXPAND);
+	playPanel->GetSizer()->AddStretchSpacer(10);
+	playPanel->GetSizer()->Add(showx, 0, wxEXPAND);
+	playPanel->GetSizer()->Add(showy, 0, wxEXPAND);
+	playPanel->GetSizer()->Add(shows, 0, wxEXPAND);
+	playPanel->GetSizer()->Add(showr, 0, wxEXPAND);
+	playPanel->GetSizer()->AddStretchSpacer(1);
+	playPanel->GetSizer()->Add(interpTypeBox, 50, wxEXPAND);
+	playPanel->GetSizer()->AddStretchSpacer(50);
 
 	tlpframe->SetSizer(tlpSizer);
 	tlpSizer->Add(PointDrawPanle, 1, wxEXPAND);
