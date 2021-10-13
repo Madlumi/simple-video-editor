@@ -1,7 +1,7 @@
 #include "TlSliders.h"
 #include "wx/wx.h"
 #include "wx/sizer.h"
-
+#include <string.h>
 
 
 
@@ -50,6 +50,9 @@ END_EVENT_TABLE()
 
 void TlSlider::mouseMoved(wxMouseEvent& event) {
     wp = event.GetPosition();
+    if(heldPoint!=NULL){
+    
+    }
     paintNow();
 }
 void TlSlider::mouseDown(wxMouseEvent& event) {
@@ -115,14 +118,26 @@ void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
 int TlSlider::scaleToY(double s) {
     return midY + (1 - s) * 100 - 50;
 }
+
+// i = midY + (1 - s) * 100 - 50;
+// s=(midY - 50-i)/100+1
+double TlSlider::scaleToY_NEG(int i) {
+   
+
+    return (midY - 50 - i) / 100 + 1;
+    //return midY + (1 - s) * 100 - 50;
+}
 void TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
     int i = 0;
     while (head->next != NULL) {
         /* pointbrush */
         if (head->camEntry != NULL) {
             if (((cp.x - i * p_dist) ^ 2 + (cp.y - scaleToY(head->camEntry->scale)) ^ 2) < (p_diam ^ 2)) {
-                OutputDebugStringA("YEEEEHAAAWWWW");
+                
+                heldPoint = head;
+                return;
             }
+            
             //dc.DrawCircle(wxPoint(i * p_dist, midY + (1 - head->camEntry->scale) * 100 - 50), p_diam);
 
         }
@@ -135,9 +150,17 @@ void TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
 }
 
 void TlSlider::render(wxDC& dc) {
+    //int s = (int)(scaleToY_NEG(scaleToY(1))*100);
+
+    //char num_char[10 + sizeof(char)];
+
+    //std::sprintf(num_char, "%d", s);
+
+    //OutputDebugStringA(num_char);
+
 
     if (points != NULL) { drawPoints(dc, points); };
-    OutputDebugStringA("123sdfgsdfgvsdfgdfsfds");
+    
     // draw some text
     dc.DrawText(wxT("Testing"), 40, 60);
 
