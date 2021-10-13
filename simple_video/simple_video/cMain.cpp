@@ -29,7 +29,22 @@ EVT_TOGGLEBUTTON(EList::showr, ShowR)
 wxEND_EVENT_TABLE()
 
 
-
+void cMain::initPanels() {
+	
+	botPanel->SetBackgroundColour(wxColor(25, 0, 100));
+	playPanel = new wxPanel(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
+	playPanel->SetBackgroundColour(wxColor(25, 25, 25));
+	
+	DisplayScroller = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(600, 600), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
+	TimelineScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(0, 0), wxSize(100, 21), wxHSCROLL, wxT("scrolledWindow"));
+	TimelinePointScroller = new wxScrolledWindow(botPanel, EList::TlpScroll, wxPoint(0, 0), wxSize(20, 20), wxVSCROLL, wxT("scrolledWindow"));
+	DisplayScroller->SetBackgroundColour(wxColor(200, 200, 200));
+	TimelineScroller->SetBackgroundColour(wxColor(130, 130, 130));
+	TimelinePointScroller->SetBackgroundColour(wxColor(25, 25, 25));
+	frame2 = new wxPanel(DisplayScroller, wxID_ANY, wxPoint(0, 0), wxSize(1920, 1080));
+	tlpframe = new wxPanel(TimelinePointScroller, wxID_ANY, wxPoint(0, 0), wxSize(500, 500));
+	tlpframe->SetBackgroundColour(wxColor(250, 250, 250));
+}
 cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)) {
 	SetFont(wxFont(
 		20, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL,
@@ -45,56 +60,20 @@ cMain::cMain() :wxFrame(nullptr, wxID_ANY, "name",wxPoint(0,0),wxSize(1200,1000)
 
 
 	wxSplitterWindow* splitterV = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
-	//wxSplitterWindow* splitter = new wxSplitterWindow(splitterV, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
-	
-	//wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
-	//topPanel = new wxPanel(splitter, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
-	//topPanel->SetBackgroundColour(wxColor(100,100,100));
-
-	
-
-
 	botPanel = new wxPanel(splitterV, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
-	botPanel->SetBackgroundColour(wxColor(25, 0, 100));
-	
-
-	playPanel = new wxPanel(botPanel, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
-	
-	
-	playPanel->SetBackgroundColour(wxColor(25, 25, 25));
+	frame = new wxPanel(splitterV, wxID_ANY, wxPoint(50, 50), wxSize(300, 300));
+	initPanels();
 	initControlls(playPanel);
-
-	
-
-	frame = new wxPanel(splitterV, wxID_ANY,  wxPoint(50, 50), wxSize(300, 300));
-	
-	DisplayScroller = new wxScrolledWindow(frame, wxID_ANY, wxPoint(0, 0), wxSize(600, 600), wxHSCROLL | wxVSCROLL | wxALWAYS_SHOW_SB, wxT("scrolledWindow"));
-	
-	TimelineScroller = new wxScrolledWindow(botPanel, wxID_ANY, wxPoint(0, 0), wxSize(100, 21), wxHSCROLL, wxT("scrolledWindow"));
-	TimelinePointScroller = new wxScrolledWindow(botPanel, EList::TlpScroll, wxPoint(0, 0), wxSize(20, 20), wxVSCROLL, wxT("scrolledWindow"));
-	
-	DisplayScroller->SetBackgroundColour(wxColor(200, 200, 200));
-	TimelineScroller->SetBackgroundColour(wxColor(130, 130, 130));
-	TimelinePointScroller->SetBackgroundColour(wxColor(25, 25, 25));
-
-	
-
 	//tlPanel = new wxPanel(TimelineScroller, wxID_ANY, wxPoint(500, 50), wxSize(50, 50));
 	//tlPanel->SetBackgroundColour(wxColor(25, 200, 50));
 
-	frame2 = new wxPanel(DisplayScroller, wxID_ANY, wxPoint(0, 0), wxSize(1920, 1080));
 
-	tlpframe = new wxPanel(TimelinePointScroller, wxID_ANY, wxPoint(0, 0), wxSize(500, 500));
-	tlpframe->SetBackgroundColour(wxColor(250, 250, 250));
 	PointDrawPanle = new TlSlider(tlpframe);
 	
 	//varius definers--------------------------------
 	tim = new wxTimer(this, EList::Timer);
 	
-	const wxString choices[4] = { wxT("None"),wxT("Hard"),wxT("Linear"),wxT("Smooth") };
-	interpTypeBox = new wxComboBox(playPanel, EList::interpTypeBox, "Linear", wxDefaultPosition, wxDefaultSize, 4,
-								   choices, wxCB_READONLY,
-								   wxDefaultValidator, wxT("InterTypeBox"));
+
 	//nextf->Bind(wxEVT_BUTTON, &cMain::BtnNextF, this);
 	//nextf->Bind(wxEVT_BUTTON, &Entry::clicked, this, -1, e->img);
 	
@@ -212,7 +191,10 @@ void cMain::initControlls(wxPanel* parent) {
 	showy->SetValue(1);
 	shows->SetValue(1);
 	showr->SetValue(1);
-
+	const wxString choices[4] = { wxT("None"),wxT("Hard"),wxT("Linear"),wxT("Smooth") };
+	interpTypeBox = new wxComboBox(playPanel, EList::interpTypeBox, "Linear", wxDefaultPosition, wxDefaultSize, 4,
+								   choices, wxCB_READONLY,
+								   wxDefaultValidator, wxT("InterTypeBox"));
 }
 
 
