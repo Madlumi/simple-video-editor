@@ -123,7 +123,10 @@ void wxImagePanel::OnSize(wxSizeEvent& event) {
 void wxImagePanel::exportFrame(std::string p, int i, double scale, wxPoint loc, double r) {
     std::string pp = p +"/file_"+ std::to_string(i)+".png";
     //wxImage img = image.Rotate(0);
+    int w = image.GetWidth();
+    int h = image.GetHeight();
     wxImage iiii = image.Size(wxSize(image.GetWidth()/scale,image.GetHeight() / scale), loc);
+    iiii.Rescale(w,h);
     iiii.SaveFile(pp);
     iiii.Destroy();
 }
