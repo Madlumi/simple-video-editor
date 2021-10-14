@@ -168,13 +168,11 @@ int TlSlider::scaleToY(double s, int j) {
     return mids[j] + s;
 }
 
-// i = midY + (1 - s) * 100 - 50;
-// s=(midY - 50-i)/100+1
 double TlSlider::scaleToY_NEG(int i, int j) {
    
 
-    if (j == EList::sp) { return (double(mids[j] - 50 - i) / 100) + 1; }
-    return i-mids[j] ;
+    if (j == EList::sp) { return (double(double(mids[j]) - 50 - i) / 100) + 1; }
+    return i- double(mids[j]) ;
 }
 void stupidvsoutput(int i) {
     char num_char[10 + sizeof(char)];
@@ -185,15 +183,21 @@ void stupidvsoutput(int i) {
 frame* TlSlider::getClickPoint(struct frame* head,wxPoint cp) {
     int i = 0;
     while (head->next != NULL) {
-        /* pointbrush */
         if (head->camEntry != NULL) {
-
+            
+            double d;
             for (int j = 0; j < point_types; j++) {
+
+                if (j == EList::sp) { d = head->camEntry->scale;
+                } else if (j == EList::xp) { d = head->camEntry->x;
+                } else if (j == EList::yp) { d = head->camEntry->y;
+                } else if (j == EList::rp) { d = head->camEntry->r; }
+
                 if (
                     (cp.x - i * p_dist)
                 * (cp.x - i * p_dist) +
-                (cp.y - scaleToY(head->camEntry->scale, j))
-                * (cp.y - scaleToY(head->camEntry->scale, j))
+                (cp.y - scaleToY(d, j))
+                * (cp.y - scaleToY(d, j))
 
                 < (p_diam * p_diam)) {
 
@@ -228,29 +232,8 @@ void drawBg(wxDC& dc) {
     //
 }
 void TlSlider::render(wxDC& dc) {
-    //dc.Clear();
     drawBg(dc);
-
-
-
     if (points != NULL) { drawPoints(dc, points); };
-    
-    // draw some text
-    //dc.DrawText(wxT("Testing"), 40, 60);
-
-    // draw a circle
-    //dc.SetBrush(*wxGREEN_BRUSH); // green filling
-    //dc.SetPen(wxPen(wxColor(255, 0, 0), 5)); // 5-pixels-thick red outline
-    //dc.DrawCircle(wp, 5 /* radius */);
-
-    // draw a rectangle
-
-
-    // draw a line
-    //dc.SetPen(wxPen(wxColor(0, 0, 0), 3)); // black line, 3 pixels thick
-    //dc.DrawLine(300, 100, 700, 300); // draw line across the rectangle
-
-    // Look at the wxDC docs to learn how to draw other stuff
 }
 void interpCam(struct frame* head) {
     int i = 0;
