@@ -114,7 +114,7 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 		//TODO remove 
 		iii++;
 		tlLen += 15;
-		if (iii >= 15/*mLoad*/) {
+		if (iii >=mLoad) {
 			break;
 		}
 		//timelineAddEnd(tl, mkEntry(sss));
