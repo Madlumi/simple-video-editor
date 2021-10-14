@@ -1,3 +1,4 @@
 # simple-video-editor
- 
-uses wxwidgets 
+ A simple video editor project using wxwidgets.
+ Very unpolished.
+ Not much functionallity. 
