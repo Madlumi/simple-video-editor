@@ -20,9 +20,6 @@ public:
     ~cMain();
 
 public:
-    //wxButton* btn = nullptr;
-    //wxTextCtrl* txt = nullptr;
-    //wxListBox* lst = nullptr;
     wxMenuBar* menuBar = nullptr;
     wxButton* nextf = nullptr;
     wxButton* prevf = nullptr;
@@ -51,7 +48,6 @@ public:
 
     void ShowR(wxCommandEvent& evt);
 
-    void OnbtnClck(wxCommandEvent &evt);
     
     void BtnNextF(wxCommandEvent& evt);
     void Zoomout(wxCommandEvent& evt);
@@ -91,5 +87,6 @@ public:
     wxImagePanel* drawPane2;
 
     wxDECLARE_EVENT_TABLE();
+
 };
 

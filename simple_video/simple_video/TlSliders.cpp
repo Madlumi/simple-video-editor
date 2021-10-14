@@ -67,6 +67,7 @@ void TlSlider::mouseDown(wxMouseEvent& event) {
         heldPoint = f;
         heldPoint->camEntry->type[heldType] = brush;
     }
+    mouseMoved(event);
 }
 void TlSlider::mouseReleased(wxMouseEvent& event) {
     heldPoint = NULL;
@@ -224,8 +225,8 @@ void drawBg(wxDC& dc) {
     dc.SetPen(wxPen(wxColor(150, 150, 150), 1));
     
     int boxsize = 100;
-    for (int x = 0; x < dc.GetSize().GetWidth()/100; x++) {
-        for (int y = 0; y < dc.GetSize().GetHeight() / 100; y++) {
+    for (int x = 0; x <= dc.GetSize().GetWidth()/100; x++) {
+        for (int y = 0; y <= dc.GetSize().GetHeight() / 100; y++) {
             dc.DrawRectangle(x* boxsize, y* boxsize, boxsize, boxsize);
         }
     }

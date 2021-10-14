@@ -3,7 +3,6 @@
 #include "Entry.h"
 
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
-EVT_BUTTON(10000, OnbtnClck)
 EVT_MENU(EList::MenuNew, MenuNew)
 EVT_MENU(EList::MenuOpen, MenuOpen)
 EVT_MENU(EList::MenuExit, MenuExit)
@@ -16,7 +15,7 @@ EVT_BUTTON(EList::play, BtnPlay)
 EVT_BUTTON(EList::zoomin, Zoomin)
 EVT_BUTTON(EList::zoomout, Zoomout)
 
-EVT_SCROLLWIN(onTlScroll)
+
 
 EVT_TIMER(EList::Timer, TimNextF)
 
@@ -159,8 +158,8 @@ void cMain::initPanels() {
 	TimelineScroller->SetBackgroundColour(wxColor(130, 130, 130));
 	TimelinePointScroller->SetBackgroundColour(wxColor(25, 25, 25));
 	frame2 = new wxPanel(DisplayScroller, wxID_ANY, wxPoint(0, 0), wxSize(1920, 1080));
-	tlpframe = new wxPanel(TimelinePointScroller, wxID_ANY, wxPoint(0, 0), wxSize(500, 500));
-	tlpframe->SetBackgroundColour(wxColor(250, 250, 250));
+	tlpframe = new wxPanel(TimelinePointScroller, wxID_ANY, wxPoint(0, 0), wxSize(15, 500));
+	tlpframe->SetBackgroundColour(wxColor(200, 200, 200));
 }
 
 void cMain::initControlls(wxPanel* parent) {
@@ -223,13 +222,6 @@ void cMain::ShowR(wxCommandEvent& evt) {
 	PointDrawPanle->paintNow();
 
 }
-
-void cMain::OnbtnClck(wxCommandEvent& evt) {
-	//lst->AppendString(txt->GetValue());
-	//OutputDebugStringA("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-	evt.Skip();
-}
-
 void cMain::BtnNextF(wxCommandEvent& evt) {
 	
 	assets->nextFrame();
@@ -280,13 +272,14 @@ void cMain::MenuImport(wxCommandEvent& evt) {
 
 
 	assets->addFolder(dirDial.GetPath().ToStdString(), TimelineScroller, frame2);
+
+	TimelinePointScroller->SetVirtualSize(wxSize(assets->tlLen, 1080));
+	tlpframe->SetSize(wxSize(assets->tlLen, 1080));
 	PointDrawPanle->initTl(assets->tl);
 	this->Layout();
 }
 
 void cMain::MenuExport(wxCommandEvent& evt) {
-	OutputDebugStringA("EXPORTINGGGGGGGGGGGGGGGGGGGGGGG");
-
 	wxDirDialog dirDial(this, "chose output folder", "E:/ANIM"/*def path*/, 
 						wxDD_DEFAULT_STYLE, 
 						wxDefaultPosition, wxDefaultSize,
@@ -304,9 +297,9 @@ wxMenuBar* cMain::initmenu() {
 	wxMenuBar* mb = new wxMenuBar();
 
 	wxMenu* menuFile = new wxMenu;
-	menuFile->Append(EList::MenuNew, "New");
-	menuFile->Append(EList::MenuOpen, "Open");
-	menuFile->Append(EList::MenuSave, "Save");
+	//menuFile->Append(EList::MenuNew, "New");
+	//menuFile->Append(EList::MenuOpen, "Open");
+	//menuFile->Append(EList::MenuSave, "Save");
 	menuFile->AppendSeparator();
 	menuFile->Append(EList::MenuImport, "Import");
 	menuFile->Append(EList::MenuExport, "Export");
