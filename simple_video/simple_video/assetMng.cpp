@@ -178,4 +178,30 @@ void assetMng::nextFrame() {
 }
 void assetMng::prevFrame() {
 	
+
+	if (tl == NULL) { return; };
+	frame* head = tl->next;
+	if (head == NULL) {
+		OutputDebugString(L"nextFrame: no head\n");
+		return;
+	}
+	frame* prev = tl->next;//getlast
+	while (prev->next != NULL) {
+		prev = prev->next;
+	}
+	int frameN = 0;
+	while (head->next != NULL) {
+		if (head->entry->img->IsShown()) {
+			prev->entry->show();
+			prev->camEntry->update(prev->entry);
+			head->entry->hide();
+			return;
+		}
+		frameN++;
+		prev = head;
+		head = head->next;
+	}
+	prev->entry->show();
+	prev->camEntry->update(prev->entry);
+	head->entry->hide();
 }
