@@ -271,9 +271,10 @@ void cMain::MenuSave(wxCommandEvent& evt) {
 //TODO error handling it was litteraly in´the docs, why not include it?
 void cMain::MenuImport(wxCommandEvent& evt) {
 	wxDirDialog dirDial(this, "chose frame folder", "E:/ANIM"/*def path*/, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, "chose frame folder");
-	dirDial.ShowModal();
-	//dirDial.GetPath();
-
+	if (dirDial.ShowModal() == wxID_CANCEL) {
+		return;
+	}
+		
 
 	
 
@@ -281,10 +282,6 @@ void cMain::MenuImport(wxCommandEvent& evt) {
 	assets->addFolder(dirDial.GetPath().ToStdString(), TimelineScroller, frame2);
 	PointDrawPanle->initTl(assets->tl);
 	this->Layout();
-	
-
-		//std::cout << entry.path() << std::endl;
-	ZoomDisplay(.9);
 }
 
 void cMain::MenuExport(wxCommandEvent& evt) {
@@ -295,7 +292,9 @@ void cMain::MenuExport(wxCommandEvent& evt) {
 						wxDefaultPosition, wxDefaultSize,
 						"chose output folder"
 	);
-	dirDial.ShowModal();
+	if (dirDial.ShowModal() == wxID_CANCEL) {
+		return;
+	}
 	//dirDial.GetPath();
 	assets->exportFolder(dirDial.GetPath().ToStdString());
 

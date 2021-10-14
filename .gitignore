@@ -46,3 +46,12 @@ simple_video/.vs/simple_video/v16/ipch/AutoPCH/63bc7befcfd22bf6/IMGFRAME.ipch
 simple_video/.vs/simple_video/v16/ipch/AutoPCH/5ed6b8453abf0b0f/ENTRY.ipch
 simple_video/.vs/simple_video/v16/ipch/AutoPCH/28ad54b88ac368e4/ASSETMNG.ipch
 simple_video/.vs/simple_video/v16/ipch/AutoPCH/a23c623ae168391f/ELIST.ipch
+simple_video/simple_video/Debug/EList.obj
+simple_video/simple_video/Debug/assetmng.obj
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/f43606df14381bb6/TLSLIDERS.ipch
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/a23c623ae168391f/ELIST.ipch
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/3252c25b842c9515/TLSLIDERS.ipch
+simple_video/simple_video/Debug/EList.obj
+simple_video/simple_video/Debug/assetmng.obj
+*.ipch
+simple_video/.vs/simple_video/v16/ipch/AutoPCH/a23c623ae168391f/ELIST.ipch

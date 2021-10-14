@@ -97,7 +97,7 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 	//for (int i = 0; i < 10; i++) {
 	//	e[i] = entry_create(":)", tlpar,impar, i);
 	//}
-
+	OutputDebugString(L":DDDDD0\n");
 	wxProgressDialog *progress = new 
 	wxProgressDialog("Loading...",
 		"Importing files",
@@ -118,8 +118,9 @@ void assetMng::addFolder(std::string p, wxWindow* tlpar, wxPanel* impar) {
 		}
 		//timelineAddEnd(tl, mkEntry(sss));
 	}
-	
+	OutputDebugString(L":DDDDD1\n");
 	progress->Destroy();
+	OutputDebugString(L":DDDDD2\n");
 }
 
 bool assetMng::exportFolder(std::string p) {

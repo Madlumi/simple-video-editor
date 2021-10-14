@@ -129,7 +129,7 @@ void TlSlider::drawPoint(wxDC& dc, struct frame* head,int i, int j) {
         dc.SetBrush(wxBrush(wxColor(25, 200, 25), wxBRUSHSTYLE_SOLID));
         dc.SetPen(wxPen(col[j], 2));
     } else if (head->camEntry->type[j] == EList::smooth) {
-        dc.SetBrush(wxBrush(wxColor(25, 50, 200), wxBRUSHSTYLE_SOLID));
+        dc.SetBrush(wxBrush(wxColor(25, 200, 200), wxBRUSHSTYLE_SOLID));
         dc.SetPen(wxPen(col[j], 2));
     }
 
@@ -156,10 +156,8 @@ void TlSlider::drawPoints(wxDC& dc, struct frame* head) {
             }
 
         }
-
         i += 1;
         head = head->next;
-
 
     }
 }
@@ -287,28 +285,36 @@ void interpCamSpan(struct frame* head, int len, int j) {
     } else if (j == EList::rp) { end = nav->camEntry->r; }
 
     nav = head;
-    for (int i = 0; i < len; i++) {
+    if (len > 1) {
+        for (int i = 0; i < len; i++) {
 
-        double val = calcInter(start, end, len, i, type);
+            double val = calcInter(start, end, len, i, type);
 
-        if (j == EList::sp) { nav->camEntry->scale = val; 
-        } else if (j == EList::xp) { nav->camEntry->x = val; 
-        } else if (j == EList::yp) { nav->camEntry->y = val; 
-        } else if (j == EList::rp) { nav->camEntry->r = val; }
-        nav = nav->next;
+            if (j == EList::sp) {
+                nav->camEntry->scale = val;
+            } else if (j == EList::xp) {
+                nav->camEntry->x = val;
+            } else if (j == EList::yp) {
+                nav->camEntry->y = val;
+            } else if (j == EList::rp) { 
+                nav->camEntry->r = val; 
+            }
+            nav = nav->next;
+        }
     }
-
 }
 double calcInter(double start, double end, int len, int curr, int type) {
     if (type == EList::hard) {
         return start;
     } else if (type == EList::linear) {
         return start + ((end - start) / len) * curr;
-    } else if (type == EList::derived) {
+    } else if (type == EList::smooth) {
         /*unimplemented*/
-        return start;
+        double t =(curr*1.0) / (len*1.0);
+        float sqt = t * t;
+        return start +  (sqt / (2.0 * (sqt - t) + 1.0))*((end - start));
     }
-
+    return start;
 }
 
 int untilNextPoint(struct frame* head, int j) {
